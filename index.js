@@ -11,7 +11,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//app.use(require('./routes'));
+app.use(require('./routes'));
+
+app.get('/', (req, res)=> {
+    res.send('in homepage');
+})
 
 //connect to db with mongoose
 mongoose.connect('mongodb+srv://jahnun-user:jahnun-is-good@jahnun-store.rno5j.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
