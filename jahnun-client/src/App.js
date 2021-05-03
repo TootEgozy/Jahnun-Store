@@ -1,12 +1,11 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import React from 'react'
 import { Route } from 'react-router';
-import User from './components/user.component';
+import User from './components/User';
 import { BrowserRouter } from 'react-router-dom';
 
-const hey = "hey";
-
+/*
 function App() {
   console.log(hey);
   return (
@@ -18,6 +17,19 @@ function App() {
         </p>
   
       </header>
+    </div>
+  );
+}
+*/
+
+function App() {
+
+  return (
+    <div>
+      <BrowserRouter>
+        <Route exact path='/' component={User} />
+      </BrowserRouter>
+
     </div>
   );
 }
