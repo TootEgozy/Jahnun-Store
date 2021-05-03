@@ -1,20 +1,21 @@
-import React from 'react'
+import logo from './logo.svg';
 import './App.css';
-import { Route } from 'react-router';
-import User from './components/user';
-import { BrowserRouter } from 'react-router-dom';
+
+const hey = "hey";
 
 function App() {
-
+  console.log(hey);
   return (
-    <div>
-      <BrowserRouter>
-        <Route exact path='/' component={User} />
-      </BrowserRouter>
-
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+         Toot's App
+        </p>
+  
+      </header>
     </div>
   );
 }
 
 export default App;
-
