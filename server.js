@@ -26,6 +26,10 @@ if (process.env.NODE_ENV === 'production') {
     });
   }
 
+  app.get('/', (req, res)=>{
+      res.send("hey");
+  })
+
 
 //connect to db with mongoose
 mongoose.connect('mongodb+srv://jahnun-user:jahnun-is-good@jahnun-store.rno5j.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
