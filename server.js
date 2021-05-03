@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(require('./routes'));
+//app.use(require('./routes'));
 
 if (process.env.NODE_ENV === 'production') {
 
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
      // Express serve up index.html file if it doesn't recognize route
      const path = require('path');
      app.get('*', (req, res) => {
-       res.sendFile(path.resolve(__dirname, './jahnun-client/public', 'build', 'index.html'));
+       res.sendFile(path.resolve(__dirname, 'jahnun-client/public', 'build', 'index.html'));
      });
    }
 
