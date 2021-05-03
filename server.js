@@ -19,14 +19,13 @@ if (process.env.NODE_ENV === 'production') {
     // Exprees will serve up production assets
     app.use(express.static('client/build'));
   
-    app.get('/user', (req, res)=>{
-        res.send("in user");
-    })
      // Express serve up index.html file if it doesn't recognize route
      const path = require('path');
-     app.get('*', (req, res) => {
-        console.log(path.resolve(__dirname, './jahnun-client/public'));
-        res.sendFile(path.resolve(__dirname, './jahnun-client/public', 'build', 'index.html'));
+    //  app.get('/react', (req, res) => {
+    //     res.sendFile(path.resolve(__dirname, './jahnun-client/public', 'build', 'index.html'));
+    //  });
+     app.get('/test', (req, res) => {
+        res.sendFile(path.resolve(__dirname, './jahnun-client', 'build', 'test.html'));
      });
    }
 
