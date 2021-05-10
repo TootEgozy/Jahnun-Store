@@ -45,9 +45,12 @@ const createUser = (req, res) => {
         isAdmin: false
     });
 
-    user.save((err) => {
+    user.save(async(err) => {
         if (err) return res.status(400).send("Error: " +err);
-        return res.send({"success": user});
+
+        const token = await user.generateAuthToken();
+
+        return res.send({user, token});
     });
 }
 
@@ -85,7 +88,10 @@ const editUser = async(req, res)=> {
     }
 
     try {
-        const user = await userModel.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+        const user = await userModel.findById(req.params.id);
+
+        updates.forEach((update)=> user[update] = req.body[update]);
+        await user.save();
 
         if(!user) {
             return res.status(404).send('user not found');
@@ -97,6 +103,17 @@ const editUser = async(req, res)=> {
     }
 }
 
+const userLogin = async (req, res)=> {
+    try {
+        const user = await userModel.findByCredentials(req.body.email, req.body.password);
+
+        const token = await user.generateAuthToken();
+        return res.send({user, token});
+    }
+    catch(e) {
+        return res.status(400).send('Unable to login');
+    }
+}
 // const addAccountToUser = async(req, res)=> {
 //    try {
 //     const newAccount = req.body.id;
@@ -146,5 +163,6 @@ module.exports = {
     getUserById: getUserById,
     editUser: editUser,
     deleteUser: deleteUser,
+    userLogin: userLogin,
 
 }

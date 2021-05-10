@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const validator = require('../node_modules/validator');
 const phoneValidator = require('../node_modules/libphonenumber-js');
 const { ObjectID } = require('bson');
+const bcrypt = require('../node_modules/bcryptjs');
+const jwt = require('../node_modules/jsonwebtoken');
 
 const userSchema = mongoose.Schema({    
     email: {
@@ -66,8 +68,55 @@ const userSchema = mongoose.Schema({
             type: ObjectID,
             required: true
         }
+    }],
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
     }]
 })
+
+//Static method that looks up the user by email and confirms the login by comparing the password to the hashed password. Returns the user.
+//Static methods are used on the user schema.
+userSchema.statics.findByCredentials = async(email, password)=> {
+    
+    const user = await userModel.findOne({ email });
+
+    if(!user) throw new Error('Unable to login');
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if(!isMatch) throw new Error('Unable to login');
+
+    return user;
+};
+
+userSchema.methods.generateAuthToken = async function () {
+    const user = this;
+
+    //Create a new jwt for the user, use a stringified id for the encoding and choose a 'secret' string for the decoding.
+    const token = jwt.sign({_id: user._id.toString()}, 'jahnunandeggandschug');
+
+    user.tokens = user.tokens.concat({ token });
+    
+    await user.save();
+    
+    return token;
+
+};
+
+//Method to hash the user password.
+//Methods are used on the user instances.
+userSchema.pre('save', async function (next) {
+    const user = this;
+    
+    if(user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8);
+    }
+
+    next();
+});
 
 const userModel  = mongoose.model('Users',userSchema);
 

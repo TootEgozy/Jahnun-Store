@@ -4,20 +4,21 @@ const { ObjectId } = require('bson');
 
 const dishSchema = mongoose.Schema({    
     price: {
-        type: String,
+        type: Number,
         required: true
     },
     name: {
         type: String,
         required: true,
         trim: true,
-        unique: true
+        unique: true,
+        lowercase: true,
     },
     stock: {
         type: Number,
         required: true
     },
-    Images: {
+    images: {
         type: Array,
         default: [],
         image: {

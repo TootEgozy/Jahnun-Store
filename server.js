@@ -9,13 +9,18 @@ const app = express();
 
 app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
     //routes for all database actions
     app.use('/api', require('./routes'));
     //app.use('/api', require('./routes'));
+
+    //making the image_uploads folder public
+    //get the image on browser: http://localhost:8000/image_uploads/{file name}
+    app.use('/image_uploads',express.static('image_uploads'));
+
 
 
 if (process.env.NODE_ENV === 'production') {
