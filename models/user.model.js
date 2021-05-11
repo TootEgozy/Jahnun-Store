@@ -75,7 +75,20 @@ const userSchema = mongoose.Schema({
             required: true
         }
     }]
-})
+});
+
+//A method to send out a user profile without the password and the tokens array.
+userSchema.methods.getPublicProfile = function() {
+    
+    const user = this;
+
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.tokens;
+
+    return userObject;
+}
 
 //Static method that looks up the user by email and confirms the login by comparing the password to the hashed password. Returns the user.
 //Static methods are used on the user schema.

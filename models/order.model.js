@@ -8,7 +8,7 @@ const now = date.toLocaleString();
 
 const orderSchema = mongoose.Schema({    
     cash: {
-        type: String,
+        type: Number,
         required: true,
         validate(input) {
             if(!validator.isDecimal(input)) {
@@ -19,9 +19,10 @@ const orderSchema = mongoose.Schema({
             }
         }
     },
-    order: {
+    dishes: {
         type: Array,
         default: [],
+        required: true,
         item: {
             type: Object,
             id: {
@@ -30,7 +31,8 @@ const orderSchema = mongoose.Schema({
             },
             amount: {
                 type: Number,
-                required: true
+                required: true,
+                min: 1
             }
         }
     },

@@ -3,7 +3,12 @@ const userModel = require('../models/user.model');
 const getAllUsers = async(req, res) =>{
     try {
         const users = await userModel.find({});
-        return res.send(users);
+
+        const filteredUsers = users.map((user)=> {
+            return user.getPublicProfile();
+        })
+
+        return res.send(filteredUsers);
     }
     catch (e) {
         console.log(e);
@@ -22,19 +27,14 @@ const getAllUsers = async(req, res) =>{
 //     }
 // }
 
-const getUserById = async(req, res)=> {
-    try {
-        const user = await userModel.find({_id: req.params.id}); 
-        res.send(user);
-    }
-    catch(e) {
-        return res.status(400).send("Error: could not find user");
-    }
-}
-
 const createUser = (req, res) => {
     const {email, password, name, adress, phoneNumber, orders} = req.body;
 
+    const isAdmin = function() {
+        if(name === 'tootad1995' && email === 'tootegozy@gmail.com')
+        return true;
+        else return false;
+    }
     const user = new userModel({
         email: email,
         password: password,
@@ -42,7 +42,7 @@ const createUser = (req, res) => {
         adress: adress,
         phoneNumber: phoneNumber,
         orders: orders,
-        isAdmin: false
+        isAdmin: isAdmin()
     });
 
     user.save(async(err) => {
@@ -50,23 +50,21 @@ const createUser = (req, res) => {
 
         const token = await user.generateAuthToken();
 
-        return res.send({user, token});
+        const publicUser = user.getPublicProfile();
+        return res.send({publicUser, token});
     });
 }
 
 const deleteUser = async(req, res)=> {
     try{
-        if(JSON.parse(req.body.isAdmin) === true) {
 
-            const user = await userModel.findByIdAndDelete(req.params.id);
+        const user = await userModel.findByIdAndDelete(req.body.id);
 
-            if (!user) {
+        if (!user) {
 
-                return res.status(404).send('Could not find user');
-            }
-            return res.send(user);
+            return res.status(404).send('Could not find user');
         }
-        return res.status(400).send('unauthorised operation');
+        return res.send();
     }
     catch(e) {
  
@@ -88,7 +86,7 @@ const editUser = async(req, res)=> {
     }
 
     try {
-        const user = await userModel.findById(req.params.id);
+        const user = req.user;
 
         updates.forEach((update)=> user[update] = req.body[update]);
         await user.save();
@@ -96,7 +94,8 @@ const editUser = async(req, res)=> {
         if(!user) {
             return res.status(404).send('user not found');
         }
-        return res.send(user);
+        const publicUser = user.getPublicProfile();
+        return res.send(publicUser);
     }
     catch(e) {
         return res.status(400).send(e);
@@ -108,61 +107,51 @@ const userLogin = async (req, res)=> {
         const user = await userModel.findByCredentials(req.body.email, req.body.password);
 
         const token = await user.generateAuthToken();
-        return res.send({user, token});
+        return res.send({user: user.getPublicProfile(), token});
     }
     catch(e) {
         return res.status(400).send('Unable to login');
     }
 }
-// const addAccountToUser = async(req, res)=> {
-//    try {
-//     const newAccount = req.body.id;
-//     const user = await userModel.find({_id: req.params.id});
 
-//     const accounts = await user[0].accounts;
+const userLogOut = async(req, res)=> {
+    try {
+        req.user.tokens = req.user.tokens.filter((token)=> {
+            
+            return token.token !== req.token;
+        });
 
-//     if(!accounts.includes(newAccount)) {
-//         const updatedUser = await userModel.findByIdAndUpdate(req.params.id, {$push: {accounts: [newAccount]}});
+        await req.user.save();
 
-//         return res.send(updatedUser);
-//     }
-//     return res.send(`Account ${newAccount} is already attached to user ${req.params.id}`)
+        res.send();
+    }
+    catch(e) {
+        res.status(500).send();        
+    }
+}
 
-//    }
-//    catch(e) {
-//     return res.status(400).sent(e);
-//    }
+const userLogOutAll = async(req, res)=> {
+    try {
+        req.user.tokens = [];
 
-// }
+        await req.user.save();
 
-// const removeAccountFromUser = async(req, res)=> {
-//    try {
-//     const removedAccount = req.body.id;
-//     const user = await userModel.find({_id: req.params.id});
-//     console.log(user);
+        return res.send();
+    }
+    catch(e){
 
-//     // const accounts = await user[0].accounts;
-
-//     // const index = accounts.lastIndexOf(removedAccount);
-//     // console.log(index);
-//     const updatedUser = await userModel.findByIdAndUpdate(req.params.id, {$pull: {accounts: {$in: [removedAccount]}}});
-
-//     console.log(updatedUser);
-
-//     return res.send(updatedUser);
-//    }
-//    catch(e) {
-//     return res.status(400).sent(e);
-//    }
-
-// }
+        res.status(500).send();        
+    }
+}
 
 module.exports = {
     createUser: createUser,
     getAllUsers: getAllUsers,
-    getUserById: getUserById,
+   // getUserById: getUserById,
     editUser: editUser,
     deleteUser: deleteUser,
     userLogin: userLogin,
+    userLogOut: userLogOut,
+    userLogOutAll: userLogOutAll,
 
 }

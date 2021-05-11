@@ -17,6 +17,7 @@ const auth = async(req, res, next)=> {
 
         //set the user as a parameter on request:
         req.user = user;
+        req.token = token;
         
         next();
     }
