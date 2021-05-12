@@ -8,7 +8,7 @@ const now = date.toLocaleString();
 
 const orderSchema = mongoose.Schema({    
     cash: {
-        type: Number,
+        type: String,
         required: true,
         validate(input) {
             if(!validator.isDecimal(input)) {
@@ -21,8 +21,10 @@ const orderSchema = mongoose.Schema({
     },
     dishes: {
         type: Array,
-        default: [],
         required: true,
+        validate(arr) {
+            if(arr.length < 1) throw new Error('Cannot create an empty order');
+        },
         item: {
             type: Object,
             id: {

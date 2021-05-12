@@ -27,8 +27,9 @@ const dishSchema = mongoose.Schema({
         }
     },
     icon: {
-        type: String,
-        required: false
+        type: Object,
+        required: false,
+        default: {}
     },
     isActive: {
         type: Boolean,

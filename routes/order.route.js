@@ -17,9 +17,9 @@ router.post('/createOrder', auth, (req, res)=> {
     orderController.createOrder(req, res);
 });
 
-// router.post('/addDish', auth, (req, res)=> {
-//     orderController.addDish(req, res);
-// })
+router.post('/editOrder', auth, (req, res)=> {
+    orderController.editOrder(req, res);
+});
 
 router.delete('/deleteOrder', auth, (req, res)=> {
     orderController.deleteOrder(req, res);

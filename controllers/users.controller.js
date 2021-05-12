@@ -106,7 +106,12 @@ const userLogin = async (req, res)=> {
     try {
         const user = await userModel.findByCredentials(req.body.email, req.body.password);
 
+        if(user.tokens.length >= 15) {
+            user.tokens = [];
+        }
+
         const token = await user.generateAuthToken();
+        
         return res.send({user: user.getPublicProfile(), token});
     }
     catch(e) {

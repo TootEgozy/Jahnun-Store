@@ -1,5 +1,7 @@
+const { ObjectID } = require('bson');
 const dishModel = require('../models/dish.model');
 const orderModel = require('../models/order.model');
+const { update } = require('../models/user.model');
 const userModel = require('../models/user.model');
 
 const getAllOrders = async(req, res) =>{
@@ -20,6 +22,12 @@ const getAllOrders = async(req, res) =>{
 //After successfully creating the order, I will fetch its ID and
 //push into the user's orders array.
 
+// newOrder JSON:
+// {
+//     "cash": 8,
+//     "adress": "hoohooo12 pardes hanna",
+//     "dishes": [{"id": "60980e73aa37796f10423030" , "amount": 7}, {"id": "60980ffc74701d6fb06eff30", "amount": 2}]
+// }
 
 const createOrder = async(req, res) => {
     try {
@@ -32,67 +40,63 @@ const createOrder = async(req, res) => {
             adress: adress,
             userId: req.user._id,
             dishes: []
+        };
+
+        for(let i = 0; i<req.body.dishes.length; i++) {
+
+            let dish = req.body.dishes[i];
+
+            if(dish.id && dish.amount) {
+
+                const searchedDish = await dishModel.findById(dish.id);
+
+                const dishObj = {
+                    id: searchedDish._id, 
+                    amount: dish.amount
+                }
+
+                newOrder.dishes.push(dishObj);  
+            }  
         }
 
-        //dishes should be sent in a correct JSON format: 
-        // "dishes": [{"id": "60980e73aa37796f10423030" , "amount": 7}, {"id": "60980ffc74701d6fb06eff30", "amount": 2}]
+        const order = await new orderModel(newOrder);
 
-        req.body.dishes.forEach((dish)=> newOrder.dishes.push(dish));
+        await order.save();
 
-        console.log(newOrder);
+        await user.orders.push(order._id);
 
-        const order = new orderModel(newOrder);
-        
-
-        // const newOrder = new orderModel({
-        //     cash: cash,
-        //     userId: req.user._id,
-        //     adress: adress,
-        //     order: order
-        // });
-
-        // console.log("new order");
-        // console.log(newOrder.order);
-        
-        // newOrder.save((err) = async(err) => {
-        //     if (err) return res.status(500).send("Error: " +err);
-
-        //     user.orders.push(newOrder._id);
-        //     await user.save();
-
-            return res.send(order);
-   //     });
+        await user.save();
+   
+        return res.send(order);
     }
     catch(e) {
-        return res.send({"error": e});
+
+        return res.status(400).send({"error": e});
     }
-   
 }
 
 const deleteOrder = async(req, res)=> {
     try {
         const user = req.user;
 
-        const order = await orderModel.findByIdAndDelete(req.body.orderId);
+        const order = await orderModel.findByIdAndDelete(req.body.id);
         
-        if(!order || !user) throw new Error();
-
-        console.log(user.orders);
+        if(!order) throw new Error();
 
         for(let i = 0; i<user.orders.length; i++) {
 
-            const order = user.orders[i][0].toString();
+           // const order = user.orders[i][0].toString();
 
-            console.log(order);
+           const orderId = user.orders[i][0].toString();
             
-            if(order === req.body.orderId) {
+            if(orderId === req.body.id) {
 
                 user.orders.splice(i, 1);
             }
         }
         await user.save();
  
-        res.send(user);
+        res.send();
     }
     catch(e) {
         return res.status(400).send('Deleting order failed');
@@ -103,26 +107,32 @@ const editOrder = async(req, res)=>{
 
     const updates = Object.keys(req.body);
 
+    const indexId = updates.indexOf("id");
+
+    updates.splice(indexId, 1);
+
     const allowedUpdates = ["isCompeleted", "adress"];
 
-    const isValidOperation = updates.every((update)=> {
-        return allowedUpdates.includes(update);
-    });
+    const isValidOperation = updates.every((update)=> allowedUpdates.includes(update));
 
     if(!isValidOperation) {
         return res.status(401).send('illegal updates');
     }
 
     try {
-        const order = orderModel.findById(req.body.id);
-
-        updates.forEach((update)=> order[update] = req.body[update]);
-        
-        await order.save();
+        const order = await orderModel.findById(req.body.id);
 
         if(!order) {
             return res.status(404).send('order not found');
         }
+
+        updates.forEach((update)=> {
+            if(update!== "id") {
+                order[update] = req.body[update];
+            }
+        });
+
+        await order.save();
 
         return res.send(order);
     }
@@ -147,55 +157,54 @@ const editOrder = async(req, res)=>{
 //     }
 // },
 
-const addDish = async(req, res)=> {
-    try {
-        const order = await orderModel.findById(req.body.id);
+// const addDish = async(req, res)=> {
+//     try {
+//         const order = await orderModel.findById(req.body.id);
 
-        const dish = await dishModel.findById(req.body.dishId);
+//         const dish = await dishModel.findById(req.body.dishId);
 
-        const item = {
-            _id: dish._id,
-            amount: req.body.amount
-        }
+//         const item = {
+//             _id: dish._id,
+//             amount: req.body.amount
+//         }
 
-        console.log(order);
+//         console.log(order);
 
-        //check if the order already have that dish, if so, add the amount to the dish amount.
-        //if not, concat the dish to the order array.
+//         //check if the order already have that dish, if so, add the amount to the dish amount.
+//         //if not, concat the dish to the order array.
 
-        const existDish = order.order.find((dish)=> {
-            console.log(dish._id, item._id);
-            console.log(dish._id == item._id);
-            return dish._id == item._id
-        });
+//         const existDish = order.order.find((dish)=> {
+//             console.log(dish._id, item._id);
+//             console.log(dish._id == item._id);
+//             return dish._id == item._id
+//         });
         
-        console.log(typeof(existDish));
+//         console.log(typeof(existDish));
 
-        order.order = order.order.concat([item]);
-        await order.save();
+//         order.order = order.order.concat([item]);
+//         await order.save();
         
-        return res.send(order);
-    }
-    catch(e) {
-        return res.status(404).send(e);
-    }
-}
+//         return res.send(order);
+//     }
+//     catch(e) {
+//         return res.status(404).send(e);
+//     }
+// }
 
-const removeDish = async(req, res)=> {
-    try {
-        const order = await orderModel.findById(req.body.id);
+// const removeDish = async(req, res)=> {
+//     try {
+//         const order = await orderModel.findById(req.body.id);
 
-        const dish = await dishModel.findById(req.body.dishId);
-    }
-    catch(e) {
-        res.status(404).send();
-    }
-}
+//         const dish = await dishModel.findById(req.body.dishId);
+//     }
+//     catch(e) {
+//         res.status(404).send();
+//     }
+// }
 
 module.exports = {
     createOrder: createOrder,
     getAllOrders: getAllOrders,
     deleteOrder: deleteOrder,
     editOrder: editOrder,
-    // addDish: addDish,
 }
