@@ -42,9 +42,17 @@ router.post('/addImages', auth, adminOnly, upload.array('productImages', 4), (re
     dishController.addDishImages(req, res);
 });
 
+router.post('/addIcon', auth, adminOnly, upload.single('productIcon'), (req, res)=> {
+    dishController.addDishIcon(req, res);
+});
+
+router.post('/editIcon', auth, adminOnly, upload.single('productIcon'), (req, res)=> {
+    dishController.editDishIcon(req, res);
+});
+
 router.delete('/clearImages', auth, adminOnly, (req, res)=> {
     dishController.clearAllImages(req, res);
-})
+});
 
 router.delete('/deleteDish', auth, adminOnly, (req, res)=> {
     dishController.deleteDish(req, res);

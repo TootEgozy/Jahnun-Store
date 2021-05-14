@@ -16,7 +16,7 @@ const getAllDishes = async(req, res) =>{
 
 const createDish = async(req, res) => {
     try {
-        const {price, name, stock, icon, isActive} = req.body;
+        const {price, name, stock, isActive} = req.body;
         const image = req.file;
 
         const dish = new dishModel({
@@ -24,7 +24,6 @@ const createDish = async(req, res) => {
             name: name,
             stock: stock,
             images: [image],
-            icon: icon,
             isActive: isActive
         });
     
@@ -94,8 +93,10 @@ const editDish = async(req, res)=> {
     const allowedUpdates = ["price", "name", "stock", "icon", "isActive"];
     
     const indexId = updates.indexOf("id");
+    const indexIcon = updates.indexOf("icon");
 
     updates.splice(indexId, 1);
+    updates.splice(indexIcon, 1);
 
     const isValidOperation = updates.every((update)=> {
         return allowedUpdates.includes(update);
@@ -128,14 +129,14 @@ const editDish = async(req, res)=> {
 const addDishImages = async(req, res)=> {
     try {
         const images = req.files;
-        console.log("req.files");
-        console.log(images);
 
         if(images) {
 
             const dish = await dishModel.findById(req.body.id);
 
             dish.images = dish.images.concat(images);
+
+            await dish.save();
 
             return res.send(dish);
         }
@@ -183,6 +184,57 @@ const clearAllImages = async(req, res)=> {
     }
 }
 
+const addDishIcon = async(req, res)=> {
+    try {
+        const dish = await dishModel.findById(req.body.id);
+
+        if(req.file.size > 700) {
+
+            return res.status(400).send('File too big');
+        }
+        dish.icon = req.file;
+
+        await dish.save();
+
+        res.send(dish);
+    }
+    catch(e) {
+        return res.status(400).send(e);
+    }
+}
+
+const editDishIcon = async(req, res)=> {
+    try {
+        const dish = await dishModel.findById(req.body.id);
+
+        //Delete the old icon
+        fs.rm(`./image_uploads/${dish.icon.filename}`, { recursive:true }, (err) => {
+
+            if(err){
+
+                console.log(err.message);
+
+                return;
+            }
+            console.log("File deleted successfully " +dish.icon.filename);
+        });
+
+        //Set a new icon
+        if(req.file.size > 700) {
+
+            return res.status(400).send('File too big');
+        }
+        dish.icon = req.file;
+
+        await dish.save();
+
+        res.send(dish);
+    }
+    catch(e) {
+        return res.status(400).send(e);
+    }
+}
+
 module.exports = {
     createDish: createDish,
     getAllDishes: getAllDishes,
@@ -190,4 +242,6 @@ module.exports = {
     deleteDish: deleteDish,
     addDishImages: addDishImages,
     clearAllImages: clearAllImages,
+    addDishIcon: addDishIcon,
+    editDishIcon: editDishIcon
 }
