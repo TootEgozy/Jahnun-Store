@@ -38,6 +38,10 @@ router.post('/editDish', auth, adminOnly, (req, res)=> {
     dishController.editDish(req, res);
 });
 
+router.post('/changeStock', auth, (req, res)=>{
+    res.send("edit stock")
+});
+
 router.post('/addImages', auth, adminOnly, upload.array('productImages', 4), (req, res)=> {
     dishController.addDishImages(req, res);
 });
