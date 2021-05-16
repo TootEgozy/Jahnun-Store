@@ -4,9 +4,9 @@ const usersController = require('../controllers/users.controller');
 const auth = require('../middleware/auth');
 const adminOnly = require('../middleware/adminOnly');
 
-// router.get('/', (req, res)=> {
-//     res.send("in user routes");
-// });
+router.get('/', (req, res)=> {
+    res.send("in user routes");
+});
 
 router.get('/me', auth, async(req, res)=>{
     res.send(req.user);

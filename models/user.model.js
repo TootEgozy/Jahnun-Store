@@ -86,7 +86,7 @@ userSchema.methods.getPublicProfile = function() {
 
     delete userObject.password;
     delete userObject.tokens;
-
+    
     return userObject;
 }
 

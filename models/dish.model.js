@@ -18,6 +18,11 @@ const dishSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    description: {
+        type: String,
+        maxLength: 200,
+        nimLength: 6
+    },
     images: {
         type: Array,
         default: [],

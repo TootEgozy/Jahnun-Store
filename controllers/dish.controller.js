@@ -16,12 +16,13 @@ const getAllDishes = async(req, res) =>{
 
 const createDish = async(req, res) => {
     try {
-        const {price, name, stock, isActive} = req.body;
+        const {price, name, description, stock, isActive} = req.body;
         const image = req.file;
 
         const dish = new dishModel({
             price: price,
             name: name,
+            description: description,
             stock: stock,
             images: [image],
             isActive: isActive
@@ -90,7 +91,7 @@ const deleteDish = async(req, res)=> {
 const editDish = async(req, res)=> {
     
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["price", "name", "stock", "icon", "isActive"];
+    const allowedUpdates = ["price", "name", "description", "stock", "icon", "isActive"];
     
     const indexId = updates.indexOf("id");
     const indexIcon = updates.indexOf("icon");
@@ -109,7 +110,7 @@ const editDish = async(req, res)=> {
     const bodyWithoutId = JSON.parse(JSON.stringify(req.body));
     delete bodyWithoutId.id;
 
-    console.log(bodyWithoutId);
+    //console.log(bodyWithoutId);
 
 
     try {
@@ -188,7 +189,7 @@ const addDishIcon = async(req, res)=> {
     try {
         const dish = await dishModel.findById(req.body.id);
 
-        if(req.file.size > 700) {
+        if(req.file.size > 4500) {
 
             return res.status(400).send('File too big');
         }
@@ -220,7 +221,7 @@ const editDishIcon = async(req, res)=> {
         });
 
         //Set a new icon
-        if(req.file.size > 700) {
+        if(req.file.size > 4500) {
 
             return res.status(400).send('File too big');
         }
