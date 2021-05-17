@@ -16,7 +16,7 @@ const getAllOrders = async(req, res) =>{
 } 
 
 //When I'm creating a new order I need:
-//The user's id, the cash, the adress & the dishes.
+//The user's id, the cash, the address & the dishes.
 //Dishes is an array of objects, with {id:, amount: } keys.
 
 //After successfully creating the order, I will fetch its ID and
@@ -25,7 +25,7 @@ const getAllOrders = async(req, res) =>{
 // newOrder JSON:
 // {
 //     "cash": 8,
-//     "adress": "hoohooo12 pardes hanna",
+//     "address": "hoohooo12 pardes hanna",
 //     "dishes": [{"id": "60980e73aa37796f10423030" , "amount": 7}, {"id": "60980ffc74701d6fb06eff30", "amount": 2}]
 // }
 
@@ -33,11 +33,11 @@ const createOrder = async(req, res) => {
     try {
         const user = req.user;
 
-        const {cash, adress} = req.body;
+        const {cash, address} = req.body;
 
         const newOrder = {
             cash: cash,
-            adress: adress,
+            address: address,
             userId: req.user._id,
             dishes: []
         };
@@ -111,7 +111,7 @@ const editOrder = async(req, res)=>{
 
     updates.splice(indexId, 1);
 
-    const allowedUpdates = ["isCompeleted", "adress"];
+    const allowedUpdates = ["isCompeleted", "address"];
 
     const isValidOperation = updates.every((update)=> allowedUpdates.includes(update));
 

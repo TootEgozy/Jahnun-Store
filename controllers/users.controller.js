@@ -28,7 +28,7 @@ const getAllUsers = async(req, res) =>{
 // }
 
 const createUser = (req, res) => {
-    const {email, password, name, adress, phoneNumber, orders} = req.body;
+    const {email, password, name, address, phoneNumber, orders} = req.body;
 
     const isAdmin = function() {
         if(name === 'tootad1995' && email === 'tootegozy@gmail.com')
@@ -39,7 +39,7 @@ const createUser = (req, res) => {
         email: email,
         password: password,
         name: name,
-        adress: adress,
+        address: address,
         phoneNumber: phoneNumber,
         orders: orders,
         isAdmin: isAdmin()

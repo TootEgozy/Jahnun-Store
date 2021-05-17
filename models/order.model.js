@@ -47,7 +47,7 @@ const orderSchema = mongoose.Schema({
         type: ObjectId,
         required: true
     },
-    adress: {
+    address: {
         type: String,
         required: true
     },

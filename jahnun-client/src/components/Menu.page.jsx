@@ -5,6 +5,8 @@ const axios = require('axios');
 
 export default function Menu({user, token}) {
 
+    // if(user) console.log(user.name);
+
     const [dishes, setDishes] = useState(null);
     const [orderDishes, setOrderDishes] = useState(null);
 

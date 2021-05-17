@@ -34,22 +34,23 @@ useEffect(()=> {
     setToken(JSON.parse(storedToken));    
   }
   else {
+    console.log('no user');
       (async()=> {
         try {
-          let payload = {email: 'guest@gmail.com', password: '123456'};
+          let payload = {email: 'guest@gmail.com', password: 123456};
 
-          let res = await axios.post('https://jahnun-store.herokuapp.com/api/user/login', payload);
+          let response = await axios.post('https://jahnun-store.herokuapp.com/api/user/login', payload);
 
-          let data = res.data;
+          let data = response.data;
 
           await setUser(JSON.stringify(data.user));
           await setToken(data.token);
 
-          await localStorage.setItem('user', JSON.stringify(data.user));
-          await localStorage.setItem('token', JSON.stringify(data.token));
+          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('token', JSON.stringify(data.token));
         }
         catch(e) {
-          console.log({'Error': e});
+          console.log(e.response.data);
         }
       })();
   }

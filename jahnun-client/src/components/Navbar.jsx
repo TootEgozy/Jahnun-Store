@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 export default function Navbar({user, token}) {
 
@@ -7,7 +7,7 @@ export default function Navbar({user, token}) {
         if(user.email !== 'guest@gmail.com') {
             return (
                 <Link to='/myProfile'>
-                    <li className='navbar-li-link'>My Profile</li>
+                    <li className='navbar-li-link'>Hello {user.name ? user.name : <Redirect to='/'/>}</li>
                 </Link>       
             )
         }
@@ -35,6 +35,9 @@ export default function Navbar({user, token}) {
         if(user.email === 'guest@gmail.com') {
             return (
                 <React.Fragment>
+                    <Link to='/'>
+                        <li className='navbar-li-link'>Hello, Guest</li>
+                      </Link>
                     <Link to='/login'>
                           <li className='navbar-li-link'>Have an Account? login</li>
                       </Link>
@@ -56,17 +59,14 @@ export default function Navbar({user, token}) {
             <div className='navbar-container'>
                 <div className='navbar'>
                     <ul className='navbar-list'>
-                      <Link to='/myProfile'>
-                        <li className='navbar-li-link'>Hello, {user.name}</li>
-                      </Link>
+                    {guestLoggedIn()}
+                    {userLoggedIn()}
                       <Link to='/about'>
                           <li className='navbar-li-link'>About</li>
                       </Link>
                       <Link to='/'>
                           <li className='navbar-li-link'>Menu</li>
                       </Link>
-                      {guestLoggedIn()}
-                      {userLoggedIn()}
                       {adminLoggedIn()}
                     </ul>
                 </div>
