@@ -34,14 +34,13 @@ useEffect(()=> {
     setToken(JSON.parse(storedToken));    
   }
   else {
-    console.log('no user');
       (async()=> {
         try {
-          let payload = {email: 'guest@gmail.com', password: 123456};
+          let payload = {email: 'guest@gmail.com', password: '123456'};
 
-          let response = await axios.post('https://jahnun-store.herokuapp.com/api/user/login', payload);
+          let res = await axios.post('https://jahnun-store.herokuapp.com/api/user/login', payload);
 
-          let data = response.data;
+          let data = res.data;
 
           await setUser(JSON.stringify(data.user));
           await setToken(data.token);
@@ -50,7 +49,7 @@ useEffect(()=> {
           localStorage.setItem('token', JSON.stringify(data.token));
         }
         catch(e) {
-          console.log(e.response.data);
+          console.log({'Error': e});
         }
       })();
   }
