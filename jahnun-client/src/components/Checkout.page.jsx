@@ -20,19 +20,16 @@ export default function Checkout({user, token, order, setOrder}) {
             try {
 
                 const payload = {id: dish.id};
-                console.log(payload);
 
                 const response = await axios.get(
-                    'https://jahnun-store.herokuapp.com/api/dish/getDishById',   
-                        { 
-                            headers: { 
+                    'https://jahnun-store.herokuapp.com/api/dish/getDishById',
+                    payload, { 
+                        headers: { 
                             Authorization: `Bearer ${token}` 
-                            }
-                        },
-                        payload
-                    );
-
-                    console.log(response.data);
+                        }
+                });
+                
+                console.log(response.data); 
 
             }
             catch(e) {

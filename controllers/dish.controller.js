@@ -17,7 +17,7 @@ const getAllDishes = async(req, res) =>{
 const getDishById = async(req, res)=> {
     try {
 
-        const dish = await dishModel.findById(req.body.id);
+        const dish = await dishModel.findById(req.params.id);
 
         return res.send(dish);
 
