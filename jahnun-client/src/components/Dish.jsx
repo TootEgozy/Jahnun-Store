@@ -5,49 +5,30 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
-export default function Dish({dish, orderDishes, setOrderDishes, user}) {
+export default function Dish({dish, orderDishes, setOrderDishes, user, cash, setCash}) {
 
     const [imgPathsI, setI] = useState(0);
     const [amount, setAmount] = useState(0);
     
     const imgPaths = dish.images.map((img)=> img.path);
 
-    //Go over this
-    
-    // In the state of the dish I will save the current place in the images array. For example 0.
-    // On hover, increace the state by 1 so the src of the image will chane, creating a dinamic photo gallery.
-
     const handleHover = () => {
 
         if(imgPathsI < imgPaths.length -1) setI(imgPathsI + 1);
         else setI(0);
-        /*
-        for(let i = 0; i < imgPaths.length; i++) {
-
-            setTimeout(() => {
-
-                if(imgPathsI < imgPaths.length -1) setI(imgPathsI + 1);
-                
-                else setI(0); 
-                
-                i = 0; 
-
-            }, 200);
-        }
-        */
     }
 
-    //On click, if the is a legal amount (sum > 0) then:
-    //Increase the amount in state to display on the screen.
-    //Create a new orderDishes array, with the updated amount, and set it to thestate of parent component 'menu'.
-    //This array of orderDishes in menu will be used to create a new order object for the request.
-
     const handleClick = async(e) => {
+
+        const pay = dish.price * e.target.value;
+
         const sum = amount + Number(e.target.value);
         
         if (sum >= 0) {
 
             await setAmount(sum);
+
+            await setCash(cash + pay);
 
             const newDishes = [];
     
@@ -109,20 +90,20 @@ export default function Dish({dish, orderDishes, setOrderDishes, user}) {
 
                 <button 
                 className='dish-incresment' 
-                value={1}
+                value={-1}
                 onClick={(e)=> handleClick(e)}
                 >
-                    +
+                    -
                 </button>
 
                 <span> {amount} </span>
 
                 <button 
                 className='dish-dencresment' 
-                value={-1}
+                value={1}
                 onClick={(e)=> handleClick(e)}
                 >
-                    -
+                    +
                 </button> 
 
                 </div>

@@ -14,6 +14,19 @@ const getAllDishes = async(req, res) =>{
     }
 } 
 
+const getDishById = async(req, res)=> {
+    try {
+
+        const dish = await dishModel.findById(req.body.id);
+
+        return res.send(dish);
+
+    }
+    catch(e) {
+        return res.status(401).send(e)
+    }
+}
+
 const createDish = async(req, res) => {
     try {
         const {price, name, description, stock, isActive} = req.body;
@@ -238,6 +251,7 @@ const editDishIcon = async(req, res)=> {
 
 module.exports = {
     createDish: createDish,
+    getDishById: getDishById,
     getAllDishes: getAllDishes,
     editDish: editDish,
     deleteDish: deleteDish,

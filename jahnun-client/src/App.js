@@ -19,6 +19,10 @@ function App() {
 const [user, setUser] = useState(null);
 const [token, setToken] = useState(null);
 
+const [order, setOrder] = useState(null);
+
+console.log(order);
+
 //On the first load of App:
 //Check if there are user & token in local storage. 
 //If so, set them to state. 
@@ -79,7 +83,7 @@ useEffect(()=> {
        <Navbar user={user} token={token}/>
         <Switch>
         <Route path='/' exact component={Menu}>
-          <Menu user={user} token={token}/>
+          <Menu user={user} token={token} order={order} setOrder={setOrder}/>
         </Route>
         <Route path='/about' exact component={About}>
           <About user={user} token={token}/>
@@ -91,7 +95,7 @@ useEffect(()=> {
           <AllUsers user={user} token={token}/>
         </Route>
         <Route path='/checkout' exact component={Checkout}>
-          <Checkout user={user} token={token}/>
+          <Checkout user={user} token={token} order={order} setOrder={setOrder}/>
         </Route>
         <Route path='/createDish' exact component={CreateDish}>
           <CreateDish user={user} token={token}/>

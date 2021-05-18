@@ -20,9 +20,6 @@ export default function AboutBox({user, token, str, fieldName, id, setAbout, abo
             payload[fieldName] = inputValue;
             payload['id'] = id;
 
-            console.log('payload');
-            console.log(payload);
-
             const response = await axios.post(
                 'https://jahnun-store.herokuapp.com/api/about/editAbout',
                 payload, { 
@@ -30,23 +27,17 @@ export default function AboutBox({user, token, str, fieldName, id, setAbout, abo
                         Authorization: `Bearer ${token}` 
                     }
             });
-            console.log('response.data:');
-            console.log(response.data);
 
             let newAbout = JSON.parse(JSON.stringify(about));
 
             newAbout[fieldName] = response.data[fieldName];
-
-            console.log('new About:');
-            console.log(newAbout);
 
             await setAbout(response.data); 
 
             setEditMode(false);
         }
         catch(e) {
-            console.log('error:');
-            console.log(e);
+            
             console.log(e.response.data);
         }
     }

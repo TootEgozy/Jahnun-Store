@@ -14,10 +14,6 @@ export default function About({user, token}) {
     
     const [about, setAbout] = useState(null);
 
-    console.log('About in About:');
-    console.log(about);
-    console.log('_______________________________');
-
     useEffect(() => {
         (async()=> {
             if (!about) {
@@ -30,9 +26,6 @@ export default function About({user, token}) {
                             }
                         }
                     );
-
-                    console.log('response.data[0]')
-                    console.log(response.data[0]);
                     await setAbout(response.data[0]);
                 }
                 catch(e) {
