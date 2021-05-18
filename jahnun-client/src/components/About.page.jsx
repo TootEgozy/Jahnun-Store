@@ -21,12 +21,16 @@ export default function About({user, token}) {
         (async()=> {
             if (!about) {
                 try {
+                    console.log(token);
+
                     const response = await axios.get(
                     'https://jahnun-store.herokuapp.com/api/about/getAbout',  
-                    { 
-                        headers: { 
-                        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGEyNGZkZmI1MjgzNDExZDg1NTgyOTMiLCJpYXQiOjE2MjEzMzI1NTJ9.QNAgsn9WH4S2akPGpiD4CMtmr_j4_1n_gt8VkCk9bRA` 
-                        }});
+                        { 
+                            headers: { 
+                            Authorization: `Bearer ${token}` 
+                            }
+                        }
+                    );
                     //await setAbout(response.data);
 
                     console.log(response.status);
