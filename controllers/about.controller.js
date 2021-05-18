@@ -7,12 +7,11 @@ const createAboutModel = async(req, res)=> {
         const aboutObj = {
             intro: 'inro test',
             product: 'product test',
-            policy: 'policy test',
-            contact: [
-                {phoneNumber: 0505050505},
-                {email: 'abcd@gmail.com'},
-                {details: 'details test'}
-            ]
+            policy: 'policy test', 
+            phoneNumber: '0503368215',
+            email: 'seya123@gmail.com',
+            details: 'Order all week, until Friday night.'
+            
         }
         const about = new aboutModel(aboutObj);
 

@@ -11,11 +11,14 @@ const aboutSchema = mongoose.Schema({
     policy: {
         type: String
     },
-    contact: {
-        type: Array,
-        item: {
-            type: Object
-        }
+    phoneNumber: {
+        type: String
+    },
+    email: {
+        type: String
+    },
+    details: {
+        type: String
     }
 })
 

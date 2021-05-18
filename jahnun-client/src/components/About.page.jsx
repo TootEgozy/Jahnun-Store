@@ -1,8 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import AboutBox from './AboutBox';
 
 const axios = require('axios');
 
@@ -14,15 +12,16 @@ const axios = require('axios');
 //Allow them to edit the about, with an input field & post request.
 export default function About({user, token}) {
     
-    const [editMode, setEditMode] = useState(false); 
     const [about, setAbout] = useState(null);
+
+    console.log('About in About:');
+    console.log(about);
+    console.log('_______________________________');
 
     useEffect(() => {
         (async()=> {
             if (!about) {
                 try {
-                    console.log(token);
-
                     const response = await axios.get(
                     'https://jahnun-store.herokuapp.com/api/about/getAbout',  
                         { 
@@ -31,10 +30,10 @@ export default function About({user, token}) {
                             }
                         }
                     );
-                    //await setAbout(response.data);
 
-                    console.log(response.status);
-                    console.log(response);
+                    console.log('response.data[0]')
+                    console.log(response.data[0]);
+                    await setAbout(response.data[0]);
                 }
                 catch(e) {
                     console.log(e.response.data);
@@ -42,13 +41,84 @@ export default function About({user, token}) {
             }
         })(); 
     });
+
+    if(about) {
+        return (
+            <div className='about-container'>
+                <div className='about-card'>
+
+                    <h1>About Jahnun</h1>
+
+                    <AboutBox
+                        user={user}
+                        token={token}
+                        str={about.intro}
+                        fieldName={'intro'}
+                        id={about._id}
+                        setAbout={setAbout}
+                        about={about}
+                    />
+
+                    <h2>My Jahnun</h2>
+
+                    <AboutBox
+                        user={user}
+                        token={token}
+                        str={about.product}
+                        fieldName={'product'}
+                        id={about._id}
+                        setAbout={setAbout}
+                        about={about}
+                    />
+
+                    <h2>My Policy</h2>
+
+                    <AboutBox
+                        user={user}
+                        token={token}
+                        str={about.policy}
+                        fieldName={'policy'}
+                        id={about._id}
+                        setAbout={setAbout}
+                        about={about}
+                    />
+
+                    <h2>Contact Me</h2>
+
+                    <AboutBox
+                        user={user}
+                        token={token}
+                        str={about.phoneNumber}
+                        fieldName={'phoneNumber'} 
+                        id={about._id}
+                        setAbout={setAbout}
+                        about={about}
+                    />
+                    <AboutBox
+                        user={user}
+                        token={token}
+                        str={about.email}
+                        fieldName={'email'}
+                        id={about._id}
+                        setAbout={setAbout}
+                        about={about}
+                    />
+                    <AboutBox
+                        user={user}
+                        token={token}
+                        str={about.details}
+                        fieldName={'details'}
+                        id={about._id}
+                        setAbout={setAbout}
+                        about={about}
+                    />
+
+                </div>
+            </div>
+        )
+    }
     
-    
-    
-    
-    return (
-        <div>
-            <h1>In About</h1>
-        </div>
+    else return (
+        <div>loading...</div>
     )
 }

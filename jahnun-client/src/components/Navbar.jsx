@@ -7,7 +7,8 @@ export default function Navbar({user, token}) {
         if(user.email !== 'guest@gmail.com') {
             return (
                 <Link to='/myProfile'>
-                    <li className='navbar-li-link'>Hello {user.name ? user.name : <Redirect to='/'/>}</li>
+                    <li className='navbar-li-link'>Hello {user.name ? user.name : <Redirect to='/'/>}
+                    </li>
                 </Link>       
             )
         }

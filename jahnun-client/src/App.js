@@ -107,7 +107,7 @@ useEffect(()=> {
           />
         </Route>
         <Route path='/myProfile' exact component={MyProfile}>
-          <MyProfile user={user} token={token} setUser={setUser}/>
+          <MyProfile user={user} token={token} setUser={setUser} setToken={setToken}/>
         </Route>
       </Switch>
       </BrowserRouter>
