@@ -2,9 +2,14 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import UserField from './UserField';
 
-export default function MyProfile({user, token}) {
+export default function MyProfile({user, token, setUser}) {
 
     const fields = ['name', 'address', 'phoneNumber', 'email', 'password'];
+
+    const innerSetUser = (value) => {
+        console.log(value);
+        setUser(value);
+    }
 
      if(user) return (
         <div className='my-profile-container'>
@@ -19,6 +24,7 @@ export default function MyProfile({user, token}) {
                             field={field}
                             user={user}
                             token={token}
+                            innerSetUser={innerSetUser}
                         />
                     )
                 })}

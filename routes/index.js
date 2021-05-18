@@ -9,6 +9,7 @@ router.get('/test', (req, res)=> {
 router.use('/user', require('./user.route'));
 router.use('/dish', require('./dish.route'));
 router.use('/order', require('./order.route'));
+router.use('/about', require('./about.route'));
 
 // router.get("/", (req, res) => {
 //     res.sendFile(path.join(__dirname, "../jahnun-client/public", "index.html"));

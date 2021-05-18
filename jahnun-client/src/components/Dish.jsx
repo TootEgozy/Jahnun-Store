@@ -18,6 +18,10 @@ export default function Dish({dish, orderDishes, setOrderDishes, user}) {
     // On hover, increace the state by 1 so the src of the image will chane, creating a dinamic photo gallery.
 
     const handleHover = () => {
+
+        if(imgPathsI < imgPaths.length -1) setI(imgPathsI + 1);
+        else setI(0);
+        /*
         for(let i = 0; i < imgPaths.length; i++) {
 
             setTimeout(() => {
@@ -30,6 +34,7 @@ export default function Dish({dish, orderDishes, setOrderDishes, user}) {
 
             }, 200);
         }
+        */
     }
 
     //On click, if the is a legal amount (sum > 0) then:
@@ -69,7 +74,6 @@ export default function Dish({dish, orderDishes, setOrderDishes, user}) {
 
     const adminEditOption = () => {
         if(user.isAdmin) {
-            console.log('admin');
             return (
                 <Link to='/editDish'>
                     <FontAwesomeIcon className='pen-icon' icon={faPen} />

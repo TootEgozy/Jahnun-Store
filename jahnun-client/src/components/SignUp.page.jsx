@@ -15,7 +15,7 @@ export default function SignUp({setUser, setToken}) {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [name, setName] = useState(null);
-    const [adress, setAdress] = useState(null);
+    const [address, setAddress] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState(null);
 
     const [errorMsg, setErrorMsg] = useState('');
@@ -37,24 +37,28 @@ export default function SignUp({setUser, setToken}) {
                 email: email,
                 password: password,
                 name: name,
-                adress: adress,
+                address: address,
                 phoneNumber: phoneNumber
                 });
+
+                console.log(response.data);
 
                 setUser(response.data.publicUser);
                 setToken(response.data.token);
 
                 localStorage.setItem('user', JSON.stringify(response.data.publicUser));
                 localStorage.setItem('token', JSON.stringify(response.data.token));
-                
+
                 console.log(response.data);
 
                 setSignedUp(true);
         }
         catch (e) {
 
+            console.log(e.response.data);
+
             if(e.response.data.includes('dup key: { email')) {
-                setErrorMsg('Try a different email adress.');
+                setErrorMsg('Try a different email address.');
             }
 
             if(e.response.data.includes('dup key: { phoneNumber')) {
@@ -73,8 +77,8 @@ export default function SignUp({setUser, setToken}) {
                 setErrorMsg('Please enter your name.')
             }
 
-            if(e.response.data.includes('ValidationError: adress: ')) {
-                setErrorMsg('Please enter your adress so we can send you jahnun.')
+            if(e.response.data.includes('ValidationError: address: ')) {
+                setErrorMsg('Please enter your address so we can send you jahnun.')
             }
 
             if(e.response.data.includes('ValidationError: phoneNumber: ')) {
@@ -123,13 +127,13 @@ export default function SignUp({setUser, setToken}) {
                     onChange={(e)=>setName(e.target.value)}/>
                 </div>
 
-                <div className='adress'>
+                <div className='address'>
                     <span>
-                        Adress:
+                        Address:
                     </span>
                     <input type='text' 
-                    value={adress} 
-                    onChange={(e)=>setAdress(e.target.value)}/>
+                    value={address} 
+                    onChange={(e)=>setAddress(e.target.value)}/>
                 </div>
 
                 <div className='phone-number'>

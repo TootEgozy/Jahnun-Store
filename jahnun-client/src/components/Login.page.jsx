@@ -16,6 +16,8 @@ export default function Login({user, token, setUser, setToken}) {
     const [stayLoggedin, setStayLoggedin] = useState(true);
     const [loggedIn, setLoggedIn] = useState(false);
 
+    const [errorMsg, setErrorMsg] = useState('');
+
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
@@ -43,10 +45,13 @@ export default function Login({user, token, setUser, setToken}) {
                         localStorage.setItem('user', JSON.stringify(response.data.user));
                         localStorage.setItem('token', JSON.stringify(response.data.token));
                     }
-                    if(response.status === 200) setLoggedIn(true);
+                    if(response.status === 200) {
+                        setLoggedIn(true);
+                        setErrorMsg('');
+                    }
                 }
                 catch(e) {
-                    console.log(e);
+                    setErrorMsg('Wrong email / password. Try again');
                 }
             })(); 
         }
@@ -96,6 +101,7 @@ export default function Login({user, token, setUser, setToken}) {
                 >
                 Login
                 </button>
+                <span className='login-error-msg'>{errorMsg}</span>
             </div>
         </div>
     )

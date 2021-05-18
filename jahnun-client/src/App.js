@@ -42,11 +42,11 @@ useEffect(()=> {
 
           let data = res.data;
 
+          await localStorage.setItem('user', JSON.stringify(data.user));
+          await localStorage.setItem('token', JSON.stringify(data.token));
+
           await setUser(JSON.stringify(data.user));
           await setToken(data.token);
-
-          localStorage.setItem('user', JSON.stringify(data.user));
-          localStorage.setItem('token', JSON.stringify(data.token));
         }
         catch(e) {
           console.log({'Error': e});
@@ -107,7 +107,7 @@ useEffect(()=> {
           />
         </Route>
         <Route path='/myProfile' exact component={MyProfile}>
-          <MyProfile user={user} token={token}/>
+          <MyProfile user={user} token={token} setUser={setUser}/>
         </Route>
       </Switch>
       </BrowserRouter>
