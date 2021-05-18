@@ -29,7 +29,7 @@ router.get('/allDishes', auth, (req, res)=> {
     dishController.getAllDishes(req, res);
 });
 
-router.get('/getDishById', auth, (req, res)=> {
+router.get('/getDishById/:id', auth, (req, res)=> {
     dishController.getDishById(req, res);
 });
 
