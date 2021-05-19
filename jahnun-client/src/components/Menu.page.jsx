@@ -67,10 +67,6 @@ export default function Menu({user, token, order, setOrder}) {
     }
 
     //Conditional rendering
-
-    if(!user) {
-        window.reload();
-    }
     
     if(!dishes) {
         return (
