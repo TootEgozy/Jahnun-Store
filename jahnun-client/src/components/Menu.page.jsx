@@ -67,16 +67,24 @@ export default function Menu({user, token, order, setOrder}) {
     }
 
     //Conditional rendering
+
+    if(!user) {
+        window.reload();
+    }
     
-    if(!user || !dishes) return (<h1>loading</h1>);
-    
+    if(!dishes) {
+        return (
+            <div className='loading-container'>
+                <h1>loading</h1>
+            </div>
+
+        );
+    }
     else return (
         <div className='menu-container'>
             <div className='menu'>
-                <h1>In Menu</h1>
-                <h2>{user.name}</h2>
-                <h2>{token}</h2>
-                <div>
+                <h1>Menu</h1>
+                <div className='dishes-in-menu'>
                     {dishes.map((dish)=> {
                         return(
                         <Dish 

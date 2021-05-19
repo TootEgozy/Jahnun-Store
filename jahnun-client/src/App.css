@@ -1,13 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=KoHo&display=swap');
+/* font-family: 'KoHo', sans-serif; */
+
+@import url('https://fonts.googleapis.com/css2?family=Emilys+Candy&display=swap');
+/* font-family: 'Emilys Candy', cursive; */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+/* font-family: 'Roboto', sans-serif; */
+
 
 * {
   margin: 0;
   box-sizing: border-box;
 }
-
-
-
-
-
 
 /************************************************************/
 /*********************** Navbar ****************************/
@@ -42,3 +46,74 @@
    color: white;
 
  }
+
+
+ /************************************************************/
+/************************** Menu ****************************/
+/**********************************************************/
+
+.menu-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient( rgb(224, 243, 243), rgb(160, 173, 173));
+}
+
+.menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem;
+  padding: 0px;
+  background-color: rgb(248, 248, 243);
+  border-radius: 2px;
+  box-shadow: 1px 2px 5px rgb(173, 173, 173);
+}
+
+.menu h1{
+  justify-self: center;
+  margin: 0.5rem;
+  font-family: 'Emilys Candy', cursive;
+  font-size: 5rem;
+  font-weight: 500;
+  color: rgb(164, 226, 183);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(29, 29, 29);
+  text-shadow: 1px 2px 5px rgb(173, 173, 173);
+}
+
+.dishes-in-menu{
+display: grid;
+width: 90%;
+margin: 1rem;
+grid-template-columns: auto auto auto;
+}
+
+.checkout-button{
+  font-size: 1.3rem;
+  margin: 1rem;
+  font-weight: 550;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(200, 240, 200);
+ 
+  border: 1px solid rgb(141, 141, 141);
+  border-radius: 5px; 
+  box-shadow: 2px 2px 5px rgb(165, 165, 165);
+}
+
+.checkout-button:hover{
+  background-color: rgb(228, 243, 239);
+  color: rgb(32, 32, 32);
+  font-weight: 550;
+  box-shadow: inset 0 0 10px #ffffff;
+  box-shadow: 1px 1px 30px rgb(255, 255, 255);
+}
+
+ /************************************************************/
+/************************** Dish ****************************/
+/**********************************************************/

@@ -34,7 +34,7 @@ export default function UserField({field, user, token, innerSetUser}) {
                         Authorization: `Bearer ${token}` 
                     }
             });
-            console.log(response.data); 
+            //console.log(response.data); 
 
             if(response.status === 200) {
 
@@ -49,7 +49,7 @@ export default function UserField({field, user, token, innerSetUser}) {
             }   
         }
         catch(e) {
-            console.log(e.response.data);
+            //console.log(e.response.data);
             await setErrorMsg('Please try another');
         }
     }

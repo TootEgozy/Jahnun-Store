@@ -21,7 +21,9 @@ const [token, setToken] = useState(null);
 
 const [order, setOrder] = useState(null);
 
-console.log(order);
+//console.log(order);
+
+const cities = [{'Zichron Yaakov':25}, {'Binyamina-Givat-Ada':15}, {'Pardes-Hanna-Carkur':25}, {'Kazir':35}, {'Harish':35}];
 
 //On the first load of App:
 //Check if there are user & token in local storage. 
@@ -57,24 +59,6 @@ useEffect(()=> {
         }
       })();
   }
-
-
-
-    // (async () => {
-    //   try {
-    //     const response = await axios.get(
-    //       'https://jahnun-store.herokuapp.com/api/user/allUsers',  
-    //       { 
-    //         headers: { 
-    //           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDk4ZWVkMzYxYjEyMTYyNjAxOTI4YjUiLCJpYXQiOjE2MjEwNjc0NzB9.04Cc8GlWHtgtYMULU4j_OkaBdHxYIKMgkCI4Eokw6jo` 
-    //         }});
-    //     console.log(response.data);
-    //   }
-    //   catch(e) {
-    //     console.log(e);
-    //   }
-
-    //})();
   },[]);
 
   return (
@@ -95,13 +79,13 @@ useEffect(()=> {
           <AllUsers user={user} token={token}/>
         </Route>
         <Route path='/checkout' exact component={Checkout}>
-          <Checkout user={user} token={token} order={order} setOrder={setOrder}/>
+          <Checkout user={user} token={token} order={order} setOrder={setOrder} cities={cities}/>
         </Route>
         <Route path='/createDish' exact component={CreateDish}>
           <CreateDish user={user} token={token}/>
         </Route>
         <Route path='/editDish' exact component={EditDish}>
-          <CreateDish user={user} token={token}/>
+          <EditDish user={user} token={token}/>
         </Route>
         <Route path='/login' exact component={Login}>
           <Login user={user} token={token} setUser={setUser} setToken={setToken}/>

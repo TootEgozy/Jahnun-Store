@@ -41,7 +41,7 @@ export default function SignUp({setUser, setToken}) {
                 phoneNumber: phoneNumber
                 });
 
-                console.log(response.data);
+                //console.log(response.data);
 
                 setUser(response.data.publicUser);
                 setToken(response.data.token);
@@ -49,13 +49,13 @@ export default function SignUp({setUser, setToken}) {
                 localStorage.setItem('user', JSON.stringify(response.data.publicUser));
                 localStorage.setItem('token', JSON.stringify(response.data.token));
 
-                console.log(response.data);
+                //console.log(response.data);
 
                 setSignedUp(true);
         }
         catch (e) {
 
-            console.log(e.response.data);
+            //console.log(e.response.data);
 
             if(e.response.data.includes('dup key: { email')) {
                 setErrorMsg('Try a different email address.');
