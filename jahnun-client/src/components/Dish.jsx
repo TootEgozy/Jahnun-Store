@@ -14,8 +14,10 @@ export default function Dish({dish, orderDishes, setOrderDishes, user, cash, set
 
     const handleHover = () => {
 
-        if(imgPathsI < imgPaths.length -1) setI(imgPathsI + 1);
-        else setI(0);
+        setTimeout(()=> {
+            if(imgPathsI < imgPaths.length -1) setI(imgPathsI + 1);
+            else setI(0);
+        },100);
     }
 
     const handleClick = async(e) => {
@@ -65,46 +67,50 @@ export default function Dish({dish, orderDishes, setOrderDishes, user, cash, set
 
     return (
         <React.Fragment>
-            {adminEditOption()}
             <div 
             className='Dish-card-container'
-            style={{border: '2px solid blue', margin: '5px'}}
             data={dish._id}
             >
                 <div className='Dish-card'>
+                {adminEditOption()}
                 <img 
                 src={imgPaths[imgPathsI]} 
                 alt={'dish'} 
                 onMouseOver={()=> handleHover()}
-                style={{width: '400px', height: '300px'}}
                 />
 
-                <h2>
+                <h2 className='dish-title'>
                     <span>
                         <img alt='icon' src={dish.icon.path}/>
                     </span>
+                    <span className='dish-title-text'>
                     {capsName}
+                    </span>
+                    
                 </h2>
-                <h3>{dish.description}</h3>
-                <h4>Price: {dish.price}&#8362;</h4> 
+                <h3 className='dish-description'>{dish.description}</h3>
+                <h4 className='dish-price'>Price: {dish.price}&#8362;</h4> 
 
-                <button 
-                className='dish-incresment' 
-                value={-1}
-                onClick={(e)=> handleClick(e)}
-                >
-                    -
-                </button>
+                <div className='buttons-and-input'>
+                    <button 
+                    className='dish-incresment' 
+                    value={-1}
+                    onClick={(e)=> handleClick(e)}
+                    >
+                        -
+                    </button>
 
-                <span> {amount} </span>
+                    <span className='amount'> {amount} </span>
 
-                <button 
-                className='dish-dencresment' 
-                value={1}
-                onClick={(e)=> handleClick(e)}
-                >
-                    +
-                </button> 
+                    <button 
+                    className='dish-decresment' 
+                    value={1}
+                    onClick={(e)=> handleClick(e)}
+                    >
+                        +
+                    </button> 
+                </div>
+                
 
                 </div>
             </div>

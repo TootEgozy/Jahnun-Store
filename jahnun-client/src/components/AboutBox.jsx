@@ -68,7 +68,7 @@ export default function AboutBox({user, token, str, fieldName, id, setAbout, abo
                 <div className='edit-about-wrapper'>
                     <input 
                     className='about-input'
-                    type='text'
+                    type='text-area'
                     value={inputValue}
                     onChange={(e)=>setInputValue(e.target.value)}
                     >

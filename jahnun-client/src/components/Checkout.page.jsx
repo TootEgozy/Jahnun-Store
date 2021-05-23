@@ -140,13 +140,17 @@ export default function Checkout({user, token, order, setOrder, cities}) {
                     {order.dishes.map((dish, index)=> {
                         return (
                             <tr>
-                                <td><img alt='icon' src={dishes[index].icon.path}/></td>
+                                <td className='icon-td'
+                                ><img alt='icon' src={dishes[index].icon.path}/></td>
 
-                                <td>{upperCaseName(dishes[index].name)}</td>
+                                <td className='name-td'
+                                >{upperCaseName(dishes[index].name)}</td>
 
-                                <td>{dish.amount}</td>
+                                <td className='amount-td'
+                                >{dish.amount}</td>
 
-                                <td>{dishes[index].price}&#8362;</td>
+                                <td className='price-td'
+                                >{dishes[index].price}&#8362;</td>
                             </tr>
                         )
                     })}

@@ -71,7 +71,7 @@ export default function Menu({user, token, order, setOrder}) {
     if(!dishes) {
         return (
             <div className='loading-container'>
-                <h1>loading</h1>
+                <div className='loader'>Loading...</div>
             </div>
 
         );
