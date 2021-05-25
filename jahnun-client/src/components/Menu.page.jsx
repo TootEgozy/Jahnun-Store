@@ -19,7 +19,8 @@ export default function Menu({user, token, order, setOrder}) {
             if (token && !dishes) {
                 try {
                     const response = await axios.get(
-                    'https://jahnun-store.herokuapp.com/api/dish/allDishes',  
+                    //'https://jahnun-store.herokuapp.com/api/dish/allDishes',  
+                    '/api/dish/allDishes',  
                     { 
                         headers: { 
                         Authorization: `Bearer ${token}` 
