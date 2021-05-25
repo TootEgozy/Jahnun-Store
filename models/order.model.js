@@ -60,4 +60,6 @@ const orderSchema = mongoose.Schema({
 
 const orderModel = mongoose.model('Orders',orderSchema);
 
+//add virtual here
+
 module.exports = orderModel;
