@@ -31,8 +31,10 @@ const createUser = (req, res) => {
     const {email, password, name, address, phoneNumber, orders} = req.body;
 
     const isAdmin = function() {
-        if(name === 'tootad1995' && email === 'tootegozy@gmail.com')
-        return true;
+        if(name === 'tootad1995' && email === 'tootegozy@gmail.com' || 
+        name === 'seyaad63' && email === 'seyaegozy@gmail.com') {
+            return true; 
+        }
         else return false;
     }
     const user = new userModel({
