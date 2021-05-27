@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 export default function Navbar({user, token}) {
 
     const userLoggedIn = () => {
-        if(user.email !== 'guest@gmail.com') {
+        if(user && user.email !== 'guest@gmail.com') {
             return (
                 <Link to='/myProfile'>
                     <li className='navbar-li-link'>Hello {user.name ? user.name : <Redirect to='/'/>}
@@ -24,9 +24,7 @@ export default function Navbar({user, token}) {
                           <Link to='/allUsers'>
                               <li className='navbar-li-link'>Users</li>
                           </Link>
-                          <Link to='/CreateDish'>
-                              <li className='navbar-li-link'>Create Dish</li>
-                          </Link>
+
                 </React.Fragment>
             )
         }  

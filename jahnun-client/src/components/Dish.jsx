@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,10 @@ export default function Dish({dish, orderDishes, setOrderDishes, user, cash, set
     const [amount, setAmount] = useState(0);
     
     const imgPaths = dish.images.map((img)=> img.path);
+
+   if(!dish.icon) {
+       return (<Redirect to='createDish'/>);
+   }
 
     const handleHover = () => {
 

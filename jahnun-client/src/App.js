@@ -21,6 +21,8 @@ const [token, setToken] = useState(null);
 
 const [order, setOrder] = useState(null);
 
+const [dishInEdit, setDishInEdit] = useState(null);
+
 //console.log(order);
 
 const cities = [{'Zichron Yaakov':25}, {'Binyamina-Givat-Ada':15}, {'Pardes-Hanna-Carkur':25}, {'Kazir':35}, {'Harish':35}];
@@ -61,7 +63,15 @@ useEffect(()=> {
   }
   },[]);
 
-  return (
+    if(!user) {
+      return (
+          <div className='loading-container'>
+              <div className='loader'>Loading...</div>
+          </div>
+
+      );
+  }
+  else return (
     <div>
       <BrowserRouter>
        <Navbar user={user} token={token}/>
@@ -82,7 +92,7 @@ useEffect(()=> {
           <Checkout user={user} token={token} order={order} setOrder={setOrder} cities={cities}/>
         </Route>
         <Route path='/createDish' exact component={CreateDish}>
-          <CreateDish user={user} token={token}/>
+          <CreateDish user={user} token={token} dishInEdit={dishInEdit} setDishInEdit={setDishInEdit}/>
         </Route>
         <Route path='/editDish' exact component={EditDish}>
           <EditDish user={user} token={token}/>

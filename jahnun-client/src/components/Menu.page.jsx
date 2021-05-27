@@ -95,7 +95,15 @@ export default function Menu({user, token, order, setOrder}) {
                         />
                         )
                     })}
+
+                    {user.isAdmin ? <Link to='/CreateDish' className='create-new-dish-link'>
+                                        <button className='create-new-dish-button'>+</button>
+                                    </Link>
+                                    : 
+                                    ""
+                    }
                 </div>
+
                 <Link 
                 to='/checkout'
                 className='checkout-link'
