@@ -4,6 +4,11 @@ import { useState } from "react";
 
 export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
 
+    // You cannot add an icon to the first create dish request. Therefore the dish component holds a logic that redirects the admin to this page if an icon has not yet been added.
+    
+    //'dishInEdit' holds the dish data after the first request.
+    // Once the new dish is compelete, It should be set to null. 
+
     const [errorMsg, setErrorMsg] = useState('');
 
     const [dish, setDish] = useState(null);
@@ -24,17 +29,6 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
 
         await setErrorMsg('');
 
-        // const dish= {
-        //     price: price,
-        //     name: name,
-        //     description: description,
-        //     stock: stock,
-        //     isActive: isActive,
-        // }
-
-        // const             productImage= image
-    
-        // console.log(dish);
 
         if(!price || !name | !description || !stock || !image) {
             await setErrorMsg('All the fileds are required, please fill them.');
@@ -69,11 +63,30 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                 console.log(e);
             }
         }
-        
+    }
 
+    // If a dish is in edit - after sending the request & before adding an icon - render a dish card and and icon input field.
+    // If it's a new dish, render a form to create a new dish.
+
+    if (dishInEdit) {
+        return (
+            <div className='dish-in-edit-card'>
+                <span>{dishInEdit.name}</span>
+                <br/>
+                <span>{dishInEdit.price}</span>
+                <br/>
+                <span>{dishInEdit.description}</span>
+                <br/>
+                <span>{dishInEdit.stock}</span>
+                <br/>
+                <span>{dishInEdit.isActive}</span>
+                <br/>
+                <image alt='dish image' src={dishInEdit.images[0].path}/>
+            </div>
+        )
     }
     
-    return (
+    else return (
         <div className='create-dish-container'>
             <div className='create-dish'>
 
@@ -89,7 +102,6 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                         type='text'
                         className='input-1'
                         onChange={(e)=>setName(e.target.value)}
-                        defaultValue={dishInEdit? dishInEdit.name : ''}
                         ></input>
                     </div>
 
@@ -99,8 +111,7 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                         type='number'
                         className='input-2'
                         onChange={(e)=>setPrice(e.target.value)}
-                        defaultValue={dishInEdit? dishInEdit.price : 0}
-                        ></input>
+                      ></input>
                     </div>
 
                     <div className='description-input'>
@@ -110,7 +121,6 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                         className='input-3'
                         rows='2'
                         onChange={(e)=>setDescription(e.target.value)}
-                        defaultValue={dishInEdit? dishInEdit.description : ''}
                         ></textarea>
                     </div>
 
@@ -120,8 +130,7 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                         type='number'
                         className='input-4'
                         onChange={(e)=>setStock(e.target.value)}
-                        defaultValue={dishInEdit? dishInEdit.stock : 0}
-                        ></input>
+                      ></input>
                     </div>
 
                     <div className='isActive-input'>
@@ -131,7 +140,6 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                         className='input-5'
                         checked={isActive}
                         onChange={()=>toggleIsActive()}
-                        defaultValue={dishInEdit? dishInEdit.isActive : true}
                         ></input>
                     </div>
 
@@ -141,7 +149,6 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                         type='file'
                         className='input-6'
                         onChange={(e)=>setImage(e.target.files[0])}
-                        defaultValue={dishInEdit? dishInEdit.image : null}
                         ></input>
                     </div>
 

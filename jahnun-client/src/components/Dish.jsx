@@ -5,14 +5,15 @@ import { Link, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
-export default function Dish({dish, orderDishes, setOrderDishes, user, cash, setCash}) {
+export default function Dish({dish, orderDishes, setOrderDishes, user, cash, setCash, dishInEdit}) {
 
     const [imgPathsI, setI] = useState(0);
     const [amount, setAmount] = useState(0);
     
     const imgPaths = dish.images.map((img)=> img.path);
 
-   if(!dish.icon) {
+    //If a dish is being created, and is not compeleted (missing an icon) - return to the create dish page. Else, 'dishInEdit' should be null and the dish component would render.
+   if(dishInEdit) {
        return (<Redirect to='createDish'/>);
    }
 

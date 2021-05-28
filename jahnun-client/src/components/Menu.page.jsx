@@ -5,15 +5,19 @@ import { Link, Redirect } from 'react-router-dom';
 
 const axios = require('axios');
 
-export default function Menu({user, token, order, setOrder}) {
+export default function Menu({user, token, order, setOrder, dishInEdit}) {
 
-    // if(user) console.log(user.name);
+    //dishes contains the response from the server to the request "get all dishes"
+    //orderdishes contains only the dishes ID's to create the order object.
+    //cash & setCash are passed to the dish components so that we can keep track on the price of the order throughout the entire process.
+
 
     const [dishes, setDishes] = useState(null);
     const [orderDishes, setOrderDishes] = useState(null);
 
     const [cash, setCash] = useState(0);
 
+    //If there are no dishes yet, make a request
     useEffect(() => {
         (async()=> {
             if (token && !dishes) {
@@ -34,6 +38,7 @@ export default function Menu({user, token, order, setOrder}) {
         })(); 
     });
 
+    //Create the orderDishes array
     (async()=> {
         if(dishes && !orderDishes) {
 
@@ -45,10 +50,11 @@ export default function Menu({user, token, order, setOrder}) {
         }
     })();
 
-    const setNewDishesArr = (value) => {
-        setOrderDishes(value);
-    }
+    // const setNewDishesArr = (value) => {
+    //     setOrderDishes(value);
+    // }
 
+    //create a temp order object and set it to app's state. Once checkout is compeleted, this will be use to create a new order document in the database.
     const createNewOrder = async(e)=> {
 
         try {
@@ -67,7 +73,7 @@ export default function Menu({user, token, order, setOrder}) {
         }
     }
 
-    //Conditional rendering
+    //Conditional rendering - return loader if the request to get the menu is not yet compeleted.
     
     if(!dishes) {
         return (
@@ -82,6 +88,7 @@ export default function Menu({user, token, order, setOrder}) {
             <div className='menu'>
                 <h1>Menu</h1>
                 <div className='dishes-in-menu'>
+
                     {dishes.map((dish)=> {
                         return(
                         <Dish 
@@ -89,9 +96,10 @@ export default function Menu({user, token, order, setOrder}) {
                         user={user} 
                         dish={dish}
                         orderDishes={orderDishes}
-                        setOrderDishes={setNewDishesArr}
+                        setOrderDishes={setOrderDishes}
                         cash={cash}
                         setCash={setCash}
+                        dishInEdit={dishInEdit} 
                         />
                         )
                     })}

@@ -16,101 +16,108 @@ const axios = require('axios');
 
 function App() {
 
-const [user, setUser] = useState(null);
-const [token, setToken] = useState(null);
+ // User & token are supposed to be always present. If there is no user logged in, the app will login the 'guest' user.
+  // Order is a temporary object that is used to collect data from all the relevant components and to create the order document in the database.
+  // DishInEdit is a flag for when the admin didn't finish all the stages in creating a dish.
 
-const [order, setOrder] = useState(null);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
-const [dishInEdit, setDishInEdit] = useState(null);
+  const [order, setOrder] = useState(null);
 
-//console.log(order);
+  const [dishInEdit, setDishInEdit] = useState(null);
 
-const cities = [{'Zichron Yaakov':25}, {'Binyamina-Givat-Ada':15}, {'Pardes-Hanna-Carkur':25}, {'Kazir':35}, {'Harish':35}];
+  console.log('dishInEdit: ');
+  console.log(dishInEdit);
+  console.log('___________________________');
 
-//On the first load of App:
-//Check if there are user & token in local storage. 
-//If so, set them to state. 
-//If not, do a login request to the user guest, and set the data to the local storage & state.
-useEffect(()=> {
+  //shippment cities
+  const cities = [{'Zichron Yaakov':25}, {'Binyamina-Givat-Ada':15}, {'Pardes-Hanna-Carkur':25}, {'Kazir':35}, {'Harish':35}];
+
+  //On the first load of App:
+  //Check if there are user & token in local storage. 
+  //If so, set them to state. 
+  //If not, do a login request to the user guest, and set the data to the local storage & state.
+  useEffect(()=> {
+      
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
     
-  const storedUser = localStorage.getItem('user');
-  const storedToken = localStorage.getItem('token');
-  
-  if (storedUser && storedToken) {
+    if (storedUser && storedToken) {
 
-    setUser(JSON.parse(storedUser));
-    setToken(JSON.parse(storedToken));    
-  }
-  else {
-      (async()=> {
-        try {
-          let payload = {email: 'guest@gmail.com', password: '123456'};
+      setUser(JSON.parse(storedUser));
+      setToken(JSON.parse(storedToken));    
+    }
+    else {
+        (async()=> {
+          try {
+            let payload = {email: 'guest@gmail.com', password: '123456'};
 
-          let res = await axios.post('https://jahnun-store.herokuapp.com/api/user/login', payload);
+            let res = await axios.post('https://jahnun-store.herokuapp.com/api/user/login', payload);
 
-          let data = res.data;
+            let data = res.data;
 
-          await localStorage.setItem('user', JSON.stringify(data.user));
-          await localStorage.setItem('token', JSON.stringify(data.token));
+            await localStorage.setItem('user', JSON.stringify(data.user));
+            await localStorage.setItem('token', JSON.stringify(data.token));
 
-          await setUser(JSON.stringify(data.user));
-          await setToken(data.token);
-        }
-        catch(e) {
-          console.log({'Error': e});
-        }
-      })();
-  }
-  },[]);
+            await setUser(JSON.stringify(data.user));
+            await setToken(data.token);
+          }
+          catch(e) {
+            console.log({'Error': e});
+          }
+        })();
+    }
+    },[]);
 
-    if(!user) {
-      return (
-          <div className='loading-container'>
-              <div className='loader'>Loading...</div>
-          </div>
+      if(!user) {
+        return (
+            <div className='loading-container'>
+                <div className='loader'>Loading...</div>
+            </div>
 
-      );
-  }
-  else return (
-    <div>
-      <BrowserRouter>
-       <Navbar user={user} token={token}/>
-        <Switch>
-        <Route path='/' exact component={Menu}>
-          <Menu user={user} token={token} order={order} setOrder={setOrder}/>
-        </Route>
-        <Route path='/about' exact component={About}>
-          <About user={user} token={token}/>
-        </Route>
-        <Route path='/allOrders' exact component={AllOrders}>
-          <AllOrders user={user} token={token}/>
-        </Route>
-        <Route path='/allUsers' exact component={AllUsers}>
-          <AllUsers user={user} token={token}/>
-        </Route>
-        <Route path='/checkout' exact component={Checkout}>
-          <Checkout user={user} token={token} order={order} setOrder={setOrder} cities={cities}/>
-        </Route>
-        <Route path='/createDish' exact component={CreateDish}>
-          <CreateDish user={user} token={token} dishInEdit={dishInEdit} setDishInEdit={setDishInEdit}/>
-        </Route>
-        <Route path='/editDish' exact component={EditDish}>
-          <EditDish user={user} token={token}/>
-        </Route>
-        <Route path='/login' exact component={Login}>
-          <Login user={user} token={token} setUser={setUser} setToken={setToken}/>
-        </Route>
-        <Route path='/signUp' exact component={SignUp}>
-          <SignUp user={user} token={token} setUser={setUser} setToken={setToken}
-          />
-        </Route>
-        <Route path='/myProfile' exact component={MyProfile}>
-          <MyProfile user={user} token={token} setUser={setUser} setToken={setToken}/>
-        </Route>
-      </Switch>
-      </BrowserRouter>
-    </div>
-  );
+        );
+    }
+    else return (
+      <div>
+        <BrowserRouter>
+        <Navbar user={user} token={token}/>
+          <Switch>
+          <Route path='/' exact component={Menu}>
+            <Menu user={user} token={token} order={order} setOrder={setOrder} dishInEdit={dishInEdit}/>
+          </Route>
+          <Route path='/about' exact component={About}>
+            <About user={user} token={token}/>
+          </Route>
+          <Route path='/allOrders' exact component={AllOrders}>
+            <AllOrders user={user} token={token}/>
+          </Route>
+          <Route path='/allUsers' exact component={AllUsers}>
+            <AllUsers user={user} token={token}/>
+          </Route>
+          <Route path='/checkout' exact component={Checkout}>
+            <Checkout user={user} token={token} order={order} setOrder={setOrder} cities={cities}/>
+          </Route>
+          <Route path='/createDish' exact component={CreateDish}>
+            <CreateDish user={user} token={token} dishInEdit={dishInEdit} setDishInEdit={setDishInEdit}/>
+          </Route>
+          <Route path='/editDish' exact component={EditDish}>
+            <EditDish user={user} token={token}/>
+          </Route>
+          <Route path='/login' exact component={Login}>
+            <Login user={user} token={token} setUser={setUser} setToken={setToken}/>
+          </Route>
+          <Route path='/signUp' exact component={SignUp}>
+            <SignUp user={user} token={token} setUser={setUser} setToken={setToken}
+            />
+          </Route>
+          <Route path='/myProfile' exact component={MyProfile}>
+            <MyProfile user={user} token={token} setUser={setUser} setToken={setToken}/>
+          </Route>
+        </Switch>
+        </BrowserRouter>
+      </div>
+    );
 }
 
 export default App;
