@@ -259,6 +259,6 @@ module.exports = {
     deleteDish: deleteDish,
     addDishImages: addDishImages,
     clearAllImages: clearAllImages,
-    addDishIcon: addDishIcon,
+    // addDishIcon: addDishIcon,
     editDishIcon: editDishIcon
 }
