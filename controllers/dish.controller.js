@@ -30,7 +30,8 @@ const getDishById = async(req, res)=> {
 const createDish = async(req, res) => {
     try {
         const {price, name, description, stock, isActive} = req.body;
-        const image = req.file;
+        const image = req.files[0];
+        const icon = req.files[1];
 
         const dish = new dishModel({
             price: price,
@@ -38,6 +39,7 @@ const createDish = async(req, res) => {
             description: description,
             stock: stock,
             images: [image],
+            icon: icon,
             isActive: isActive
         });
     
@@ -198,24 +200,24 @@ const clearAllImages = async(req, res)=> {
     }
 }
 
-const addDishIcon = async(req, res)=> {
-    try {
-        const dish = await dishModel.findById(req.body.id);
+// const addDishIcon = async(req, res)=> {
+//     try {
+//         const dish = await dishModel.findById(req.body.id);
 
-        if(req.file.size > 4500) {
+//         if(req.file.size > 4500) {
 
-            return res.status(400).send('File too big');
-        }
-        dish.icon = req.file;
+//             return res.status(400).send('File too big');
+//         }
+//         dish.icon = req.file;
 
-        await dish.save();
+//         await dish.save();
 
-        res.send(dish);
-    }
-    catch(e) {
-        return res.status(400).send(e);
-    }
-}
+//         res.send(dish);
+//     }
+//     catch(e) {
+//         return res.status(400).send(e);
+//     }
+// }
 
 const editDishIcon = async(req, res)=> {
     try {

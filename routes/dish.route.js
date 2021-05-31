@@ -34,7 +34,7 @@ router.get('/getDishById/:id', auth, (req, res)=> {
 });
 
 //using upload adds "file" to request object 
-router.post('/createDish',auth, adminOnly, upload.single('productImage'), (req, res)=> {
+router.post('/createDish',auth, adminOnly, upload.array('productImages'), (req, res)=> {
     dishController.createDish(req, res);
 });
 

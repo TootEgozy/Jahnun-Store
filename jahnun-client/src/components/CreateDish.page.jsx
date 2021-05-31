@@ -1,17 +1,13 @@
 import axios from 'axios';
 import React from 'react';
 import { useState } from "react";
+import { Redirect } from 'react-router';
 
-export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
-
-    // You cannot add an icon to the first create dish request. Therefore the dish component holds a logic that redirects the admin to this page if an icon has not yet been added.
-    
-    //'dishInEdit' holds the dish data after the first request.
-    // Once the new dish is compelete, It should be set to null. 
+export default function CreateDish({user, token}) { 
 
     const [errorMsg, setErrorMsg] = useState('');
 
-    const [dish, setDish] = useState(null);
+    const [done, setDone] = useState(false);
 
     const [price, setPrice] = useState(0);
     const [name, setName] = useState('');
@@ -19,6 +15,7 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
     const [stock, setStock] = useState(0);
     const [isActive, setIsActive] = useState(true);
     const [image, setImage] = useState(null);
+    const [icon, setIcon] = useState(null);
 
     const toggleIsActive = () => {
         isActive ? setIsActive(false) : setIsActive(true);
@@ -30,9 +27,11 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
         await setErrorMsg('');
 
 
-        if(!price || !name | !description || !stock || !image) {
+        if(!price || !name | !description || !stock || !image ||!icon) {
             await setErrorMsg('All the fileds are required, please fill them.');
-        }
+        } 
+
+        else if (icon.size > 7000) setErrorMsg('Icon size is too big. Limit is 7kb');
 
         else {
             try {
@@ -43,7 +42,8 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                 data.append('description', description);
                 data.append('stock', stock);
                 data.append('isActive', isActive);
-                data.append('productImage', image);
+                data.append('productImages', image);
+                data.append('productImages', icon);
 
 
                 const response = await axios.post(  
@@ -54,9 +54,7 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                 }}
                 );
 
-                await setDish(response.data);
-                await setDishInEdit(response.data);
-
+                await setDone(true);
                 console.log(response.data);
             }
             catch(e) {
@@ -68,23 +66,25 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
     // If a dish is in edit - after sending the request & before adding an icon - render a dish card and and icon input field.
     // If it's a new dish, render a form to create a new dish.
 
-    if (dishInEdit) {
-        return (
-            <div className='dish-in-edit-card'>
-                <span>{dishInEdit.name}</span>
-                <br/>
-                <span>{dishInEdit.price}</span>
-                <br/>
-                <span>{dishInEdit.description}</span>
-                <br/>
-                <span>{dishInEdit.stock}</span>
-                <br/>
-                <span>{dishInEdit.isActive}</span>
-                <br/>
-                <image alt='dish image' src={dishInEdit.images[0].path}/>
-            </div>
-        )
-    }
+    // if (dishInEdit) {
+    //     return (
+    //         <div className='dish-in-edit-card'>
+    //             <span>{dishInEdit.name}</span>
+    //             <br/>
+    //             <span>{dishInEdit.price}</span>
+    //             <br/>
+    //             <span>{dishInEdit.description}</span>
+    //             <br/>
+    //             <span>{dishInEdit.stock}</span>
+    //             <br/>
+    //             <span>{dishInEdit.isActive}</span>
+    //             <br/>
+    //             <image alt='dish image' src={dishInEdit.images[0].path}/>
+    //         </div>
+    //     )
+    // }
+    
+    if(done) return (<Redirect to='/'/>)
     
     else return (
         <div className='create-dish-container'>
@@ -143,12 +143,21 @@ export default function CreateDish({user, token, dishInEdit, setDishInEdit}) {
                         ></input>
                     </div>
 
-                    <div className='file-input'>
+                    <div className='image-input'>
                         <span htmlFor='input-6'>Image:</span>
                         <input 
                         type='file'
                         className='input-6'
                         onChange={(e)=>setImage(e.target.files[0])}
+                        ></input>
+                    </div>
+
+                    <div className='icon-input'>
+                        <span htmlFor='input-7'>Icon:</span>
+                        <input 
+                        type='file'
+                        className='input-6'
+                        onChange={(e)=>setIcon(e.target.files[0])}
                         ></input>
                     </div>
 

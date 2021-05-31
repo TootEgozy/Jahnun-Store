@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 const axios = require('axios');
 
-export default function Menu({user, token, order, setOrder, dishInEdit}) {
+export default function Menu({user, token, order, setOrder}) {
 
     //dishes contains the response from the server to the request "get all dishes"
     //orderdishes contains only the dishes ID's to create the order object.
@@ -99,7 +99,6 @@ export default function Menu({user, token, order, setOrder, dishInEdit}) {
                         setOrderDishes={setOrderDishes}
                         cash={cash}
                         setCash={setCash}
-                        dishInEdit={dishInEdit} 
                         />
                         )
                     })}

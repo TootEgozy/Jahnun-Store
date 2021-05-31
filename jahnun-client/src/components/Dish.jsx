@@ -12,11 +12,6 @@ export default function Dish({dish, orderDishes, setOrderDishes, user, cash, set
     
     const imgPaths = dish.images.map((img)=> img.path);
 
-    //If a dish is being created, and is not compeleted (missing an icon) - return to the create dish page. Else, 'dishInEdit' should be null and the dish component would render.
-   if(dishInEdit) {
-       return (<Redirect to='createDish'/>);
-   }
-
     const handleHover = () => {
 
         setTimeout(()=> {
