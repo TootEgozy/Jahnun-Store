@@ -3,6 +3,9 @@ import { Link, Redirect } from 'react-router-dom';
 
 export default function Navbar({user, token}) {
 
+    console.log('user in navbar:');
+    console.log(user);
+
     const userLoggedIn = () => {
         if(user && user.email !== 'guest@gmail.com') {
             return (
@@ -72,62 +75,4 @@ export default function Navbar({user, token}) {
             </div>
         )
     }
-
-    // else if(user.isAdmin === false) {
-    //     return (
-    //         <div className='navbar-container'>
-    //             <div className='navbar'>
-    //                 <ul className='navbar-list'>
-    //                   <Link to='/about'>
-    //                       <li className='navbar-li-link'>About</li>
-    //                   </Link>
-    //                   <Link to='/'>
-    //                       <li className='navbar-li-link'>Menu</li>
-    //                   </Link>
-    //                   <Link to='/login'>
-    //                       <li className='navbar-li-link'>Have an Account? login</li>
-    //                   </Link>
-    //                   <Link to='/signUp'>
-    //                       <li className='navbar-li-link'>Sign Up</li>
-    //                   </Link>
-    //                   <Link to='/myProfile'>
-    //                       <li className='navbar-li-link'>My Profile</li>
-    //                   </Link>
-    //                 </ul>
-    //             </div>
-    //         </div>
-    //     )
-    // }
-
-    // else if(user.isAdmin) {
-    //     return (
-    //         <div className='navbar-container'>
-    //             <div className='navbar'>
-    //                 <ul className='navbar-list'>
-    //                   <Link to='/about'>
-    //                       <li className='navbar-li-link'>About</li>
-    //                   </Link>
-    //                   <Link to='/'>
-    //                       <li className='navbar-li-link'>Menu</li>
-    //                   </Link>
-    //                   <Link to='/login'>
-    //                       <li className='navbar-li-link'>Have an Account? login</li>
-    //                   </Link>
-    //                   <Link to='/signUp'>
-    //                       <li className='navbar-li-link'>Sign Up</li>
-    //                   </Link>
-    //                   <Link to='/allOrders'>
-    //                       <li className='navbar-li-link'>Orders</li>
-    //                   </Link>
-    //                   <Link to='/allUsers'>
-    //                       <li className='navbar-li-link'>Users</li>
-    //                   </Link>
-    //                   <Link to='/CreateDish'>
-    //                       <li className='navbar-li-link'>Create Dish</li>
-    //                   </Link>
-    //                 </ul>
-    //             </div>
-    //         </div>
-    //     )
-    // }
 }

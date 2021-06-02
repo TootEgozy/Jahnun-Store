@@ -41,9 +41,10 @@ function App() {
     const storedToken = localStorage.getItem('token');
     
     if (storedUser && storedToken) {
-
-      setUser(JSON.parse(storedUser));
-      setToken(JSON.parse(storedToken));    
+      (async()=>{
+        await setUser(JSON.parse(storedUser));
+        await setToken(JSON.parse(storedToken));
+      })();
     }
     else {
         (async()=> {
@@ -57,7 +58,7 @@ function App() {
             await localStorage.setItem('user', JSON.stringify(data.user));
             await localStorage.setItem('token', JSON.stringify(data.token));
 
-            await setUser(JSON.stringify(data.user));
+            await setUser(data.user); //made a change here, removed JSOn.Stringify
             await setToken(data.token);
           }
           catch(e) {
