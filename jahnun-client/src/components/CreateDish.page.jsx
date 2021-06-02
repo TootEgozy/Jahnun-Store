@@ -55,7 +55,6 @@ export default function CreateDish({user, token}) {
                 );
 
                 await setDone(true);
-                console.log(response.data);
             }
             catch(e) {
                 console.log(e);

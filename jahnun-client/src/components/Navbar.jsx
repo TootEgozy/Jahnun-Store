@@ -3,9 +3,6 @@ import { Link, Redirect } from 'react-router-dom';
 
 export default function Navbar({user, token}) {
 
-    console.log('user in navbar:');
-    console.log(user);
-
     const userLoggedIn = () => {
         if(user && user.email !== 'guest@gmail.com') {
             return (

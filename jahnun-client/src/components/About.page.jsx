@@ -112,6 +112,6 @@ export default function About({user, token}) {
     }
     
     else return (
-        <div>loading...</div>
+        <div className='loader'>loading...</div>
     )
 }

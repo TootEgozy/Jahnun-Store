@@ -16,9 +16,6 @@ export default function EditDish({user, token, dishInEdit, setDishInEdit}) {
         return arr.join('');
     }
 
-    console.log('done:');
-    console.log(done);
-
     const deleteDish = async() => {
 
         setErrorMsg('');
