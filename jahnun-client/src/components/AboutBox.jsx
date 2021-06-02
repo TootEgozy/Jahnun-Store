@@ -95,9 +95,9 @@ export default function AboutBox({user, token, str, fieldName, id, setAbout, abo
     }
 
     return (
-        <React.Fragment>
+        <div className='about-segment'>
             {adminEditOption()}
             {renderEditOrNot()}
-        </React.Fragment>
+        </div>
     )
 }

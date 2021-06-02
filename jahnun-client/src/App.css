@@ -130,6 +130,7 @@ grid-template-columns: auto auto auto;
   font-weight: 550;
   box-shadow: inset 0 0 10px #ffffff;
   box-shadow: 1px 1px 30px rgb(255, 255, 255);
+  cursor: pointer;
 }
 
 .create-new-dish-link{
@@ -163,6 +164,7 @@ grid-template-columns: auto auto auto;
   font-family: 'Balsamiq Sans', cursive;
   box-shadow: 1px 1px 1px rgb(202, 212, 198);
   transition: all 0.09s;
+  cursor: pointer;
 }
 
  /************************************************************/
@@ -335,6 +337,7 @@ td {
   font-weight: 550;
   box-shadow: inset 0 0 10px #ffffff;
   box-shadow: 1px 1px 30px rgb(255, 255, 255);
+  cursor: pointer;
 }
 
  /************************************************************/
@@ -374,8 +377,8 @@ td {
 }
 .loader:after {
   background:rgb(111, 121, 111);
-  width: 75%;
-  height: 75%;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   content: '';
   margin: auto;
@@ -418,27 +421,183 @@ td {
 
 .about-container{
   font-family: "Roboto" sans-serif;
-  width: 100%;
-  height: 100vh;
+  min-width: 100%;
+  min-height: 100vh;
   padding: 2rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 0;
   padding: 0;
   background-image: linear-gradient( rgb(224, 243, 243), rgb(160, 173, 173));
 }
 
 .about-card{
-  padding: 2rem;
+  padding: 4rem;
+  padding-left: 6rem;
+  padding-right: 6rem;
   width: 80vw;
-  height: 88vh;
+  min-height: 90vh;
+  height: fit-content;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: space-around;
   margin: 1.5rem;
-  padding: 0px;
   background-color: rgb(248, 248, 243);
   border-radius: 2px;
   box-shadow: 1px 2px 5px rgb(173, 173, 173);
+}
+
+
+.about-card h1{
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  margin: 1rem;
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: rgb(233, 151, 52);
+  text-shadow: 0px 0px 1px rgb(41, 17, 6);
+}
+
+.about-card h2{
+  font-family: 'Roboto', sans-serif;
+  color: rgb(49, 187, 141);
+  text-shadow:  0px 0px 1px rgb(23, 61, 61);
+  font-size: 1.7rem;
+}
+
+.about-segment {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.pen-icon{
+  font-size: 1rem;
+}
+
+.pen-icon:hover{
+  font-size: 1rem;
+  color: lightskyblue;
+  cursor: pointer;
+}
+
+ /************************************************************/
+/************************** MyProfile ****************************/
+/**********************************************************/
+
+.my-profile-container {
+  font-family: "Roboto" sans-serif;
+  min-width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient( rgb(224, 243, 243), rgb(160, 173, 173));
+}
+
+.my-profile-card {
+  padding: 4rem;
+  padding-left: 6rem;
+  padding-right: 6rem;
+  width: 80vw;
+  min-height: 90vh;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 1.5rem;
+  background-color: rgb(248, 248, 243);
+  border-radius: 2px;
+  box-shadow: 1px 2px 5px rgb(173, 173, 173);
+}
+
+.user-filed-container {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 0rem;
+  width: fit-content;
+  padding: 0.5rem;  
+}
+
+.field-name-display {
+  line-height: 2rem;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.field-name-display:hover {
+  line-height: 2rem;
+  font-weight: 800;
+  text-decoration: underline;
+  color:rgb(25, 121, 114)
+}
+
+.field-value-display {
+  margin-right: 3rem;
+}
+
+.field-input {
+  display: flex;
+}
+
+.field-input textarea {
+  width: fit-content;
+  margin: 0.2rem;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.field-input button {
+  font-size: 1rem;
+  margin: 0.2rem;
+  font-weight: 500;
+  padding: 0.1rem 0.8rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(229, 255, 254);
+  border: 1px solid rgb(141, 141, 141);
+  border-radius: 5px; 
+  box-shadow: 2px 2px 5px rgb(165, 165, 165);
+}
+
+.field-input button:hover {
+  font-size: 1rem;
+  margin: 0.2rem;
+  font-weight: 500;
+  padding: 0.1rem 0.8rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(25, 121, 114);
+  color: white;
+  border: 1px solid rgb(141, 141, 141);
+  border-radius: 5px; 
+  box-shadow: 2px 2px 5px rgb(165, 165, 165);
+  cursor: pointer;
+}
+
+.log-out-button {
+  font-size: 1rem;
+  margin: 0.2rem;
+  font-weight: 600;
+  padding: 0.5rem 0.5rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(252, 248, 250);
+  border: 1px solid rgb(141, 141, 141);
+  box-shadow: 2px 2px 3px rgb(165, 165, 165);
+  width: 5rem;
+}
+
+.log-out-button:hover {
+  font-size: 1rem;
+  margin: 0.2rem;
+  font-weight: 600;
+  padding: 0.5rem 0.5rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(248, 227, 238);
+  border: 1px solid rgb(141, 141, 141);
+  box-shadow: 2px 2px 3px rgb(165, 165, 165);
+  width: 5rem;
+  cursor: pointer;
 }

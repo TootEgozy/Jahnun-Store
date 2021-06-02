@@ -51,6 +51,7 @@ export default function MyProfile({user, token, setUser, setToken}) {
                 })}
 
                 <button
+                className='log-out-button'
                 onClick={(e)=>logOutUser(e)}
                 >
                     Log Out

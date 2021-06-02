@@ -18,7 +18,13 @@ export default function UserField({field, user, token, innerSetUser}) {
 
     },[]);
     
-  
+    const upperCaseName = (str)=> {
+        const arr = str.split('');
+        const upper = arr[0].toUpperCase();
+        arr.splice(0, 1, upper);
+
+        return arr.join('');
+    }
 
     const setUser = async(e) => {
 
@@ -61,15 +67,14 @@ export default function UserField({field, user, token, innerSetUser}) {
 
     }
 
-    const pen = <FontAwesomeIcon icon={faPen} onClick={()=> setEditMode(true)}/>;
+    const pen = <FontAwesomeIcon icon={faPen} className='pen-icon' onClick={()=> setEditMode(true)}/>;
 
     const renderFields = () => {
 
         if(editMode) {
             return(
-                <div className={`${field}-input`}>
-                    <input 
-                        type='text'
+                <div className={`field-input`}>
+                    <textarea 
                         value={inputValue}
                         onChange={(e)=> setInputValue(e.target.value)}
                     />
@@ -94,7 +99,7 @@ export default function UserField({field, user, token, innerSetUser}) {
         else return (
             <div className='field-display'>
                 <div>
-                    <span className='field-name-display'>{field}: </span>
+                    <span className='field-name-display'>{upperCaseName(field)}: </span>
                     <br/>
                     <span className='field-value-display'>{inputValue}</span>
                     {pen}                

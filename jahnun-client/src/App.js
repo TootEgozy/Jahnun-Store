@@ -19,10 +19,14 @@ function App() {
  // User & token are supposed to be always present. If there is no user logged in, the app will login the 'guest' user.
   // Order is a temporary object that is used to collect data from all the relevant components and to create the order document in the database.
 
+  //DishInEdit holds the dish that is currently in edit.
+
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
   const [order, setOrder] = useState(null);
+
+  const [dishInEdit, setDishInEdit] = useState(null);
 
   //shippment cities
   const cities = [{'Zichron Yaakov':25}, {'Binyamina-Givat-Ada':15}, {'Pardes-Hanna-Carkur':25}, {'Kazir':35}, {'Harish':35}];
@@ -77,7 +81,7 @@ function App() {
         <Navbar user={user} token={token}/>
           <Switch>
           <Route path='/' exact component={Menu}>
-            <Menu user={user} token={token} order={order} setOrder={setOrder}/>
+            <Menu user={user} token={token} order={order} setOrder={setOrder} dishInEdit={dishInEdit} setDishInEdit={setDishInEdit} />
           </Route>
           <Route path='/about' exact component={About}>
             <About user={user} token={token}/>
@@ -95,7 +99,7 @@ function App() {
             <CreateDish user={user} token={token}/>
           </Route>
           <Route path='/editDish' exact component={EditDish}>
-            <EditDish user={user} token={token}/>
+            <EditDish user={user} token={token} dishInEdit={dishInEdit} setDishInEdit={setDishInEdit}/>
           </Route>
           <Route path='/login' exact component={Login}>
             <Login user={user} token={token} setUser={setUser} setToken={setToken}/>

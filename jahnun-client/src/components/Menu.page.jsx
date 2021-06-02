@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 const axios = require('axios');
 
-export default function Menu({user, token, order, setOrder}) {
+export default function Menu({user, token, order, setOrder, dishInEdit, setDishInEdit}) {
 
     //dishes contains the response from the server to the request "get all dishes"
     //orderdishes contains only the dishes ID's to create the order object.
@@ -16,6 +16,13 @@ export default function Menu({user, token, order, setOrder}) {
     const [orderDishes, setOrderDishes] = useState(null);
 
     const [cash, setCash] = useState(0);
+
+    //Wrapping to pass down:
+    const currentDishInEdit = dishInEdit;
+
+    const setCurrentDishInEdit = (value) => {
+        setDishInEdit(value);
+    }
 
     //If there are no dishes yet, make a request
     useEffect(() => {
@@ -30,7 +37,6 @@ export default function Menu({user, token, order, setOrder}) {
                         Authorization: `Bearer ${token}` 
                         }});
                     await setDishes(response.data);
-                    console.log(response.data);
                 }
                 catch(e) {
                     console.log(e);
@@ -100,6 +106,7 @@ export default function Menu({user, token, order, setOrder}) {
                         setOrderDishes={setOrderDishes}
                         cash={cash}
                         setCash={setCash}
+                        dishInEdit={currentDishInEdit} setDishInEdit={setCurrentDishInEdit}
                         />
                         )
                     })}
