@@ -66,7 +66,7 @@
 
 
  /************************************************************/
-/************************** Menu ****************************/
+/************************* Menu ****************************/
 /**********************************************************/
 
 .menu-container {
@@ -168,7 +168,7 @@ grid-template-columns: auto auto auto;
 }
 
  /************************************************************/
-/************************** Dish ****************************/
+/************************* Dish ****************************/
 /**********************************************************/
 
 .pen-icon {
@@ -266,7 +266,7 @@ grid-template-columns: auto auto auto;
 }
 
  /************************************************************/
-/************************** Checkout ****************************/
+/********************* Checkout ****************************/
 /**********************************************************/
 .checkout-container {
   width: 100%;
@@ -341,82 +341,88 @@ td {
 }
 
  /************************************************************/
-/************************** Spinner ****************************/
+/*********************** Spinner ****************************/
 /**********************************************************/
-
-
-.loader {
-  font-size: 10px;
-  margin: 50px auto;
-  text-indent: -9999em;
-  width: 11em;
-  height: 11em;
-  border-radius: 50%;
-  background: #ffffff;
-  background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  position: relative;
-  -webkit-animation: load3 1.4s infinite linear;
-  animation: load3 1.4s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
+@font-face {
+  font-family: 'icomoon';
+  src: url("data:application/x-font-ttf;charset=utf-8;base64,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") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
-.loader:before {
-  width: 50%;
-  height: 50%;
-  background: #ffffff;
-  border-radius: 100% 0 0 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: '';
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
-.loader:after {
-  background:rgb(111, 121, 111);
+
+.icon-spinner-5:before {
+	content: "\e004";
+}
+
+@keyframes anim-rotate {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+.spinner {
+	display: inline-block;
+	font-size:4em;
+	height: 1em;
+	line-height: 1;
+	margin: .5em;
+	animation: anim-rotate 2s infinite linear;
+	color: #fff;
+	text-shadow: 0 0 .25em rgba(255,255,255, .3);
+}
+.spinner--steps {
+	animation: anim-rotate 1s infinite steps(8);
+}
+.spinner--steps2 {
+	animation: anim-rotate 1s infinite steps(12);
+}
+
+.spinner-container {
+	font-family: sans-serif;
+	color: #ccc;
+	line-height: 1.5;
+	font-size: 1em;
+	background: #596c81;
   width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  content: '';
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-@-webkit-keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-.loading-container{
-  width: 100vw;
   height: 100vh;
-  background-color: rgb(111, 121, 111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
+.talign-center {
+	text-align: center;
+}
+a, a:visited {
+	text-decoration: none;
+	color: #444;
+	text-shadow: 0 1px 2px rgba(0,0,0, .3);
+	transition: color .3s;
+}
+a:hover, a:active {
+	color: #ccc;
+}
+footer {
+	margin-top: 2em;
+}
  /************************************************************/
-/************************** About ****************************/
+/************************ About ****************************/
 /**********************************************************/
 
 .about-container{
@@ -483,7 +489,7 @@ td {
 }
 
  /************************************************************/
-/************************** MyProfile ****************************/
+/*********************** MyProfile *************************/
 /**********************************************************/
 
 .my-profile-container {
@@ -600,4 +606,101 @@ td {
   box-shadow: 2px 2px 3px rgb(165, 165, 165);
   width: 5rem;
   cursor: pointer;
+}
+
+ /************************************************************/
+/********************** Login & Sign Up ********************/
+/**********************************************************/
+
+
+.login-container,
+.signup-container {
+  font-family: "Roboto" sans-serif;
+  min-width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient( rgb(224, 243, 243), rgb(160, 173, 173));
+}
+
+.login-card,
+.signup-card {
+  padding: 4rem;
+  padding-left: 8rem;
+  padding-right: 6rem;
+  width: fit-content;
+  min-height: 70vh;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 1.5rem;
+  background-color: rgb(248, 248, 243);
+  border-radius: 2px;
+  box-shadow: 1px 2px 5px rgb(173, 173, 173);
+}
+
+.login-card h1,
+.signup-card h1{
+  font-family: 'Roboto', sans-serif;
+}
+
+.login-section,
+.signup-section {
+  font-family: 'Roboto', sans-serif;
+}
+.login-section h3{
+  
+}
+
+.login-input,
+.signup-section input{
+  border-radius: 5px;
+  border: 1px solid darkgray;
+  padding:0.5rem;
+  margin-top: 0.5rem;
+}
+
+.login-checkbox {
+  margin: 0.3rem;
+}
+
+.login-card button,
+.signup-button {
+  width: fit-content;
+  font-size: 1rem;
+  margin: 0.2rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(229, 255, 254);
+  border: 1px solid rgb(141, 141, 141);
+  border-radius: 5px; 
+  box-shadow: 2px 2px 5px rgb(165, 165, 165);
+}
+
+.login-card button:hover,
+.signup-button:hover {
+  width: fit-content;
+  font-size: 1rem;
+  margin: 0.2rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(255, 236, 151);
+  border: 1px solid rgb(141, 141, 141);
+  border-radius: 5px; 
+  box-shadow: 0px 0px 5px rgb(212, 130, 7) ;
+}
+
+.eye{
+  margin-left: 0.5rem;
+}
+
+.signup-section span{
+  margin-right: 0.5rem;
 }

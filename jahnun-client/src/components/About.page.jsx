@@ -112,6 +112,10 @@ export default function About({user, token}) {
     }
     
     else return (
-        <div className='loader'>loading...</div>
+        <div className='spinner-container'>
+            <section class="talign-center">
+                <div class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </section>
+        </div>
     )
 }

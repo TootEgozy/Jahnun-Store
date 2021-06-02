@@ -8,7 +8,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 const axios = require('axios');
 
 
-const eye = <FontAwesomeIcon icon={faEye} />;
+const eye = <FontAwesomeIcon className='eye' icon={faEye} />;
 
 export default function Login({user, token, setUser, setToken}) {
 
@@ -69,15 +69,15 @@ export default function Login({user, token, setUser, setToken}) {
             <div className='login-card'>
                 <h1>Login</h1>
 
-                <div className='email'>
-                    <span className='email-title'>Email:</span>
-                    <input className='email-input' type='text'/>
+                <div className='login-section'>
+                    <h3>Email:</h3>
+                    <input className='login-input' type='text'/>
                 </div>
 
-                <div className='password'>
-                    <span className='password-title'>Password:</span>
+                <div className='login-section'>
+                    <h3>Password:</h3>
                     <input 
-                    className='password-input' 
+                    className='login-input' 
                     type={passwordShown ? "text" : "password"}
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)}
@@ -87,14 +87,18 @@ export default function Login({user, token, setUser, setToken}) {
                      >{eye}</i>                  
                 </div>
 
-                <input 
-                type="checkbox" 
-                name="stayLoggedIn" 
-                checked={stayLoggedin}
-                onChange={(e)=>handleCheck(e)}
-                />
-                <label htmlFor="stayLoggedIn">Stay logged in    </label>
+                <div className='login-section'>
+                    <input 
+                    className='login-checkbox'
+                    type="checkbox" 
+                    name="stayLoggedIn" 
+                    checked={stayLoggedin}
+                    onChange={(e)=>handleCheck(e)}
+                    />
+                    <label htmlFor="stayLoggedIn">Stay logged in    </label>
 
+                </div>
+                
                 <button 
                 className='login-submit-button'
                 onClick={(e)=>handleSubmit(e)}

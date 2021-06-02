@@ -60,5 +60,11 @@ export default function MyProfile({user, token, setUser, setToken}) {
         </div>
      );
 
-     else return (<div>Loading...</div>);
+     else return (
+        <div className='spinner-container'>
+            <section class="talign-center">
+                <div class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </section>
+        </div>
+     );
 }

@@ -84,10 +84,11 @@ export default function Menu({user, token, order, setOrder, dishInEdit, setDishI
     
     if(!dishes) {
         return (
-            <div className='loading-container'>
-                <div className='loader'>Loading...</div>
+            <div className='spinner-container'>
+                <section class="talign-center">
+                    <div class="spinner icon-spinner-5" aria-hidden="true"></div>
+                </section>
             </div>
-
         );
     }
     else return (

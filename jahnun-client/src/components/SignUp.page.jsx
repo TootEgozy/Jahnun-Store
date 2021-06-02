@@ -24,7 +24,7 @@ export default function SignUp({setUser, setToken}) {
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
     };
-    const eye = <FontAwesomeIcon icon={faEye} />;
+    const eye = <FontAwesomeIcon className='eye' icon={faEye} />;
 
     const createUser = async() => {
         try {
@@ -95,7 +95,7 @@ export default function SignUp({setUser, setToken}) {
                 
                 <h1>Sign Up</h1>
 
-                <div className='email'>
+                <div className='signup-section'>
                     <span>
                         Email:
                     </span>
@@ -104,7 +104,7 @@ export default function SignUp({setUser, setToken}) {
                     onChange={(e)=>setEmail(e.target.value)}/>
                 </div>
 
-                <div className='password'>
+                <div className='signup-section'>
                     <span>
                         Password:
                     </span>
@@ -118,7 +118,7 @@ export default function SignUp({setUser, setToken}) {
                      >{eye}</i>
                 </div>
 
-                <div className='name'>
+                <div className='signup-section'>
                     <span>
                         Name:
                     </span>
@@ -127,7 +127,7 @@ export default function SignUp({setUser, setToken}) {
                     onChange={(e)=>setName(e.target.value)}/>
                 </div>
 
-                <div className='address'>
+                <div className='signup-section'>
                     <span>
                         Address:
                     </span>
@@ -136,7 +136,7 @@ export default function SignUp({setUser, setToken}) {
                     onChange={(e)=>setAddress(e.target.value)}/>
                 </div>
 
-                <div className='phone-number'>
+                <div className='signup-section'>
                     <span>
                         Phone Number:
                     </span>
@@ -146,12 +146,13 @@ export default function SignUp({setUser, setToken}) {
                 </div>
 
                 <span 
-                className='signup-error-text'
+                className='signup-section'
                 >
                     {errorMsg}
                 </span>
 
                 <button
+                className='signup-button'
                 onClick={()=> createUser()}
                 >
                     Sign Up
