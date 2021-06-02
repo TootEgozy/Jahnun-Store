@@ -60,11 +60,11 @@ export default function Navbar({user, token}) {
                     <ul className='navbar-list'>
                     {guestLoggedIn()}
                     {userLoggedIn()}
-                      <Link to='/about'>
-                          <li className='navbar-li-link'>About</li>
-                      </Link>
                       <Link to='/'>
                           <li className='navbar-li-link'>Menu</li>
+                      </Link>
+                      <Link to='/about'>
+                          <li className='navbar-li-link'>About</li>
                       </Link>
                       {adminLoggedIn()}
                     </ul>
