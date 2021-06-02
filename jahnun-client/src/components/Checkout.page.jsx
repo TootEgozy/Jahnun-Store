@@ -26,7 +26,7 @@ export default function Checkout({user, token, order, setOrder, cities}) {
 
     const pen = <FontAwesomeIcon icon={faPen} onClick={()=> setEditMode(true)}/>;
 
-    if(!user) {
+    if(!user || order.cash <= 0) {
         return <Redirect to='/'/>
     }
 
