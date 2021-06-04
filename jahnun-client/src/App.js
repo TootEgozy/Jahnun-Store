@@ -28,6 +28,9 @@ function App() {
 
   const [dishInEdit, setDishInEdit] = useState(null);
 
+  console.log('%cdish in edit in menu:', 'background:black; color:yellow');
+  console.log(dishInEdit);
+
   //shippment cities
   const cities = [{'Zichron Yaakov':25}, {'Binyamina-Givat-Ada':15}, {'Pardes-Hanna-Carkur':25}, {'Kazir':35}, {'Harish':35}];
 
