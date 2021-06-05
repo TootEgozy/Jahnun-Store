@@ -85,8 +85,8 @@ export default function Menu({user, token, order, setOrder, dishInEdit, setDishI
     if(!dishes) {
         return (
             <div className='spinner-container'>
-                <section class="talign-center">
-                    <div class="spinner icon-spinner-5" aria-hidden="true"></div>
+                <section className="talign-center">
+                    <div className="spinner icon-spinner-5" aria-hidden="true"></div>
                 </section>
             </div>
         );

@@ -5,10 +5,6 @@ const axios = require('axios');
 
 export default function EditDish({user, token, dishInEdit, setDishInEdit}) {
 
-    console.log('%cDish in edit in editdish:', 'background:pink; color: blue');
-    console.log(dishInEdit);
-    console.log(dishInEdit.name);
-
     const [done, setDone] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -20,18 +16,11 @@ export default function EditDish({user, token, dishInEdit, setDishInEdit}) {
 
     const [description, setDescription] = useState(dishInEdit.description);
 
+    const [isActive, setIsActive] = useState(dishInEdit.isActive);
+
     const [icon, setIcon] = useState(dishInEdit.icon);
 
     const [images, setImages] = useState(dishInEdit.images);
-
-
-//description: "555555"
-// icon: {fieldname: "productImages", originalname: "tulip.png", encoding: "7bit", mimetype: "image/png", destination: "image_uploads/", …}
-// images: [{…}]
-// isActive: true
-// name: "node js"
-// price: 5555
-// stock: 555555
 
     const upperCaseName = (str)=> {
         const arr = str.split('');
@@ -41,12 +30,71 @@ export default function EditDish({user, token, dishInEdit, setDishInEdit}) {
         return arr.join('');
     }
 
+    const editDishInfo = async()=> {
+
+        const payLoad = {
+            id: dishInEdit._id,
+            name: name,
+            price: price,
+            stock: stock,
+            description: description,
+            isActive: isActive
+        }
+        try {
+            const response = await axios.post('https://jahnun-store.herokuapp.com/api/dish/editDish', payLoad, {headers: {
+                Authorization: `Bearer ${token}`
+            }});
+
+            console.log('response:');
+            console.log(response.data);
+            
+            if(response.status === 200) {
+                setDishInEdit(response.data);
+            }
+        }
+        catch(e) {
+            console.log(e.response.value);
+        }
+    }
+
+    const cancelChanges = () => {
+        setName(dishInEdit.name);
+        setPrice(dishInEdit.price);
+        setStock(dishInEdit.stock);
+        setDescription(dishInEdit.description);
+        setIsActive(dishInEdit.isActive);
+    }
+
+    const editIcon = async() => {
+
+        const id = dishInEdit._id;
+
+        const data = new FormData();
+        data.append('productIcon', icon);
+        data.append('id', id);
+
+        console.log(id, icon);
+
+        try {
+            const response = await axios.post('https://jahnun-store.herokuapp.com/api/dish/editIcon', data, {headers: {
+                Authorization: `Bearer ${token}`
+            }});
+
+            console.log(response.data);
+            if (response.status === 200) {
+                setDishInEdit(response.data);
+            }
+        }
+        catch(e) {
+            console.log(e.response);
+        }
+    }
+
     const deleteDish = async() => {
 
         setErrorMsg('');
 
         try {
-
             const approve = window.confirm(`Are you sure you want to delete the dish ${dishInEdit.name}?`);
 
             if(approve) {
@@ -68,7 +116,6 @@ export default function EditDish({user, token, dishInEdit, setDishInEdit}) {
                     await setDone(true);
 
                     await setDishInEdit(null);
-
                 }
             }            
         }
@@ -85,49 +132,107 @@ export default function EditDish({user, token, dishInEdit, setDishInEdit}) {
                 <h1>Edit Dish: {upperCaseName(dishInEdit.name)}</h1>
                 <image alt='dish' src={dishInEdit.images[0].path}/>
 
-                <input 
-                type="text"
-                value={name}
-                onChange={(e)=>setName(e.target.value)}
-                />
-                <input 
-                type="number"
-                value={price}
-                onChange={(e)=>setPrice(e.target.value)}
-                />
-                <input 
-                type="number"
-                value={stock}
-                onChange={(e)=>setStock(e.target.value)}
-                />
-                <input 
-                type="text"
-                value={description}
-                onChange={(e)=>setDescription(e.target.value)}
-                />
+                <div className='edit-dish-name'>
+                    <h3>Name:</h3>
+                    <input 
+                    type="text"
+                    value={name}
+                    onChange={(e)=>setName(e.target.value)}
+                    />
+                </div>
+               
+                <div className='edit-dish-price'>
+                    <h3>Price:</h3>
+                    <input 
+                    type="number"
+                    value={price}
+                    onChange={(e)=>setPrice(e.target.value)}
+                    />
+                </div>
+                
+                <div className='edit-dish-stock'>
+                    <h3>Stock</h3>
+                    <input 
+                    type="number"
+                    value={stock}
+                    onChange={(e)=>setStock(e.target.value)}
+                    />
+                </div>
+                
+                <div className='edit-dish-description'>
+                    <h3>Description</h3>
+                    <textarea 
+                    type="text"
+                    value={description}
+                    onChange={(e)=>setDescription(e.target.value)}
+                    />
+                </div>
+            
+                <div className='edit-dish-isActive'>
+                    <h3>Active Dish?</h3>
+                    <input 
+                    type="checkbox"
+                    checked={isActive}
+                    onChange={()=>{
+                        isActive? setIsActive(false) : setIsActive(true);
+                    }}
+                    />
+                </div>
 
-                <div className='edit-icon-filed'>
+                <button 
+                className='edit-dish-info'
+                onClick={()=>editDishInfo()}
+                >Set</button>
+
+                <button
+                className='cancel-changes-info'
+                onClick={()=>cancelChanges()}
+                >Cancel</button>
+         
+                <br/>
+                <hr/>
+                <br/>
+
+                <div className='edit-dish-icon'>
+                    <h3>Change Dish Icon</h3>
                     <img alt='icon' src={icon.path}/>
                     <input 
                     type="file"
                     onChange={(e)=>setIcon(e.target.value)}
                     />
                 </div>
+                <button
+                className='edit-dish-icon-button'
+                onClick={()=>editIcon()}
+                >Set
+                </button>
 
-                <div className='edit-images-filed'>
+                <br/>
+                <hr/>
+                <br/>
+
+                <div className='edit-dish-images'>
+                    <h3>Edit Dish Images</h3>
 
                     {images.map((img)=> {
                         return (<img alt='dish' src={img.path}/>)
                     })}
+
+                    <br/>
 
                     <input 
                     type="file"
                     onChange={(e)=>console.log(e.target.value)}
                     />
 
+                    <button>Add Images to the dish</button>
+                    <button>Replace dish images</button>
+
                 </div>
                 
 
+                <br/>
+                <hr/>
                 <br/>
 
                 <button
