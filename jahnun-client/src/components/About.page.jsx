@@ -9,7 +9,7 @@ const axios = require('axios');
 //If the user is not an admin, do nothing.
 
 //If the user is admin, show pen icon on the about fields.
-//Allow them to edit the about, with an input field & post request.
+//Allow them to edit the about, with an input field and a post request.
 export default function About({user, token}) {
     
     const [about, setAbout] = useState(null);
